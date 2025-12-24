@@ -4,8 +4,8 @@ import { useState } from "react";
 import PublicLayout from "@/components/PublicLayout";
 import RSVPSearch from "@/components/forms/RSVPSearch";
 import RSVPForm from "@/components/forms/RSVPForm";
-import GroupRSVPForm from "@/components/forms/GroupRSVPForm";
 import AttendeeCard from "@/components/AttendeeCard";
+import GroupRSVPForm from "@/components/forms/GroupRSVPForm";
 import { Attendee, GroupWithMembers } from "@/types";
 
 export default function RSVPPage() {
