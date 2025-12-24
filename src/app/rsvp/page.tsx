@@ -88,7 +88,7 @@ export default function RSVPPage() {
                 <div className='space-y-2 text-stone-700'>
                   <p className='text-2xl font-light'>April 1st, 2026</p>
                   <p className='text-stone-500 font-light'>
-                    Nibbana Farm, South Africa
+                    Nibbana Farm, Tulbagh, South Africa
                   </p>
                 </div>
               </div>
