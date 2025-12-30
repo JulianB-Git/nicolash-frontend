@@ -146,7 +146,7 @@ describe("API Client Authentication Integration", () => {
       await publicApiClient.searchAttendees("test");
 
       expect(fetch).toHaveBeenCalledWith(
-        expect.stringContaining("/attendees/search"),
+        expect.stringContaining("/rsvp/search"),
         expect.objectContaining({
           headers: expect.not.objectContaining({
             Authorization: expect.anything(),
@@ -164,7 +164,7 @@ describe("API Client Authentication Integration", () => {
       await publicApiClient.submitRSVP("test-id", "accepted");
 
       expect(fetch).toHaveBeenCalledWith(
-        expect.stringContaining("/attendees/test-id/rsvp"),
+        expect.stringContaining("/rsvp/test-id/respond"),
         expect.objectContaining({
           method: "POST",
           headers: expect.not.objectContaining({

@@ -101,11 +101,25 @@ class AuthenticatedAPIClient {
   // Admin-only attendee operations (require authentication)
   async getAttendees(page = 1, limit = 20): Promise<AttendeesResponse> {
     const token = await this.getToken();
-    return fetchAPI<AttendeesResponse>(
+    console.log("TOKEN", token);
+    const response = await fetchAPI<any>(
       `/attendees?page=${page}&limit=${limit}`,
       {},
       token
     );
+
+    // Handle the API response format: { success: true, data: { attendees: [...], total: 7, ... } }
+    if (response && response.data) {
+      return {
+        attendees: response.data.attendees || [],
+        total: response.data.total || 0,
+        page: response.data.page || page,
+        limit: response.data.limit || limit,
+      };
+    }
+
+    // Fallback for direct response format
+    return response;
   }
 
   async createAttendee(data: CreateAttendeeRequest): Promise<Attendee> {
@@ -171,7 +185,17 @@ class AuthenticatedAPIClient {
 
   async getAllGroups(): Promise<Group[]> {
     const token = await this.getToken();
-    return fetchAPI<Group[]>("/groups", {}, token);
+    const response = await fetchAPI<any>("/groups", {}, token);
+
+    // Handle the API response format: { success: true, data: [...] }
+    if (response && response.data && Array.isArray(response.data)) {
+      return response.data;
+    } else if (Array.isArray(response)) {
+      return response;
+    } else {
+      console.warn("Unexpected groups API response format:", response);
+      return [];
+    }
   }
 
   async updateGroupMembers(id: string, memberIds: string[]): Promise<void> {

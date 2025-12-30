@@ -44,7 +44,12 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
     <div className='min-h-screen'>
       <header className='border-b bg-background'>
         <div className='container mx-auto px-4 py-4 flex justify-between items-center'>
-          <h1 className='text-xl font-semibold'>Admin Dashboard</h1>
+          <div>
+            <h1 className='text-2xl font-bold'>Wedding Admin Dashboard</h1>
+            <p className='text-sm text-muted-foreground'>
+              Manage attendees and RSVP responses
+            </p>
+          </div>
           <UserButton />
         </div>
       </header>

@@ -2,7 +2,7 @@ export interface Attendee {
   id: string;
   firstName: string;
   lastName: string;
-  email: string;
+  email?: string; // Made optional
   rsvpStatus: "pending" | "accepted" | "declined";
   groupId?: string;
   createdAt: string;
@@ -43,14 +43,14 @@ export interface AttendeesResponse {
 export interface CreateAttendeeRequest {
   firstName: string;
   lastName: string;
-  email: string;
+  email?: string; // Made optional
   groupId?: string;
 }
 
 export interface UpdateAttendeeRequest {
   firstName?: string;
   lastName?: string;
-  email?: string;
+  email?: string; // Already optional, but confirming it stays optional
   groupId?: string;
 }
 

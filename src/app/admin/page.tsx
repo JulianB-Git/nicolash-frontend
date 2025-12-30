@@ -1,10 +1,45 @@
+import AdminStats from "@/components/admin/AdminStats";
+import AttendeeList from "@/components/admin/AttendeeList";
+
 export default function AdminPage() {
   return (
-    <div className='container mx-auto px-4 py-8'>
-      <h2 className='text-2xl font-bold mb-6'>Dashboard Overview</h2>
-      <p className='text-muted-foreground'>
-        Manage attendees and view RSVP responses.
-      </p>
+    <div className='space-y-6'>
+      <div>
+        <h2 className='text-2xl font-bold mb-2'>Dashboard Overview</h2>
+        <p className='text-muted-foreground'>
+          Monitor RSVP responses and manage your guest list.
+        </p>
+      </div>
+
+      {/* Statistics Cards */}
+      <AdminStats />
+
+      {/* Attendee List */}
+      <AttendeeList />
+
+      {/* Quick Actions */}
+      <div className='grid gap-4 md:grid-cols-3'>
+        <div className='rounded-lg border p-6'>
+          <h3 className='font-semibold mb-2'>Recent Activity</h3>
+          <p className='text-sm text-muted-foreground'>
+            View the latest RSVP responses and changes.
+          </p>
+        </div>
+
+        <div className='rounded-lg border p-6'>
+          <h3 className='font-semibold mb-2'>Quick Upload</h3>
+          <p className='text-sm text-muted-foreground'>
+            Bulk upload attendees from a CSV file.
+          </p>
+        </div>
+
+        <div className='rounded-lg border p-6'>
+          <h3 className='font-semibold mb-2'>Group Management</h3>
+          <p className='text-sm text-muted-foreground'>
+            Create and manage invitation groups.
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

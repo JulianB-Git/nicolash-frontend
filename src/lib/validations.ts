@@ -3,7 +3,16 @@ import { z } from "zod";
 export const AttendeeSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
-  email: z.string().email("Valid email is required"),
+  email: z
+    .string()
+    .optional()
+    .refine((email) => {
+      // If email is provided and not empty, it must be valid
+      if (email && email.trim() !== "") {
+        return z.string().email().safeParse(email).success;
+      }
+      return true;
+    }, "Please enter a valid email address"),
   groupId: z.string().optional(),
 });
 
