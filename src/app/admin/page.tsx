@@ -1,5 +1,13 @@
-import AdminStats from "@/components/admin/AdminStats";
-import AttendeeList from "@/components/admin/AttendeeList";
+"use client";
+
+import { Suspense, lazy } from "react";
+import ErrorBoundary from "@/components/ErrorBoundary";
+import { AttendeeListFallback } from "@/components/FallbackUI";
+import LoadingSpinner from "@/components/LoadingSpinner";
+
+// Lazy load admin components for better performance
+const AdminStats = lazy(() => import("@/components/admin/AdminStats"));
+const AttendeeList = lazy(() => import("@/components/admin/AttendeeList"));
 
 export default function AdminPage() {
   return (
@@ -11,11 +19,22 @@ export default function AdminPage() {
         </p>
       </div>
 
-      {/* Statistics Cards */}
-      <AdminStats />
+      {/* Statistics Cards with Error Boundary and Lazy Loading */}
+      <ErrorBoundary context='Admin Statistics'>
+        <Suspense fallback={<LoadingSpinner text='Loading statistics...' />}>
+          <AdminStats />
+        </Suspense>
+      </ErrorBoundary>
 
-      {/* Attendee List */}
-      <AttendeeList />
+      {/* Attendee List with Error Boundary and Lazy Loading */}
+      <ErrorBoundary
+        context='Attendee List'
+        fallback={<AttendeeListFallback />}
+      >
+        <Suspense fallback={<LoadingSpinner text='Loading attendees...' />}>
+          <AttendeeList />
+        </Suspense>
+      </ErrorBoundary>
 
       {/* Quick Actions */}
       <div className='grid gap-4 md:grid-cols-3'>

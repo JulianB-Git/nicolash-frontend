@@ -2,6 +2,7 @@ import { type Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "@/components/ui/sonner";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import PerformanceMonitor from "@/components/PerformanceMonitor";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -18,8 +19,9 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang='en'>
         <body className='antialiased'>
-          <ErrorBoundary>{children}</ErrorBoundary>
+          <ErrorBoundary context='Application Root'>{children}</ErrorBoundary>
           <Toaster />
+          <PerformanceMonitor />
         </body>
       </html>
     </ClerkProvider>

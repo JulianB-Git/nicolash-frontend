@@ -32,6 +32,7 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import { useAuthenticatedApi } from "@/lib/useAuthenticatedApi";
 import { AttendeeSchema, type AttendeeFormData } from "@/lib/validations";
 import { Attendee, Group } from "@/types";
+import { adminToasts } from "@/lib/toastUtils";
 
 interface AttendeeFormProps {
   open: boolean;
@@ -56,6 +57,7 @@ export default function AttendeeForm({
 
   const form = useForm<AttendeeFormData>({
     resolver: zodResolver(AttendeeSchema),
+    mode: "onChange", // Enable real-time validation
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -72,7 +74,7 @@ export default function AttendeeForm({
       setGroups(groupsData);
     } catch (err) {
       console.error("Failed to load groups:", err);
-      // Don't show error for groups loading failure, just continue without groups
+      adminToasts.loadingError("groups");
     } finally {
       setLoadingGroups(false);
     }
@@ -106,6 +108,13 @@ export default function AttendeeForm({
     }
   }, [attendee, open, form]);
 
+  // Clear server errors when user starts typing
+  const handleInputChange = () => {
+    if (error) {
+      setError(null);
+    }
+  };
+
   const onSubmit = async (data: AttendeeFormData) => {
     setIsSubmitting(true);
     setError(null);
@@ -121,6 +130,12 @@ export default function AttendeeForm({
           email: data.email || undefined, // Convert empty string to undefined
           groupId: data.groupId === "none" ? "" : data.groupId,
         });
+        console.log("Update attendee API response:", result);
+        adminToasts.attendeeUpdated(
+          `${result?.data?.firstName || result?.firstName || data.firstName} ${
+            result?.data?.lastName || result?.lastName || data.lastName
+          }`
+        );
       } else {
         // Create new attendee
         result = await api.createAttendee({
@@ -129,13 +144,27 @@ export default function AttendeeForm({
           email: data.email || undefined, // Convert empty string to undefined
           groupId: data.groupId === "none" ? undefined : data.groupId,
         });
+        console.log("Create attendee API response:", result);
+        adminToasts.attendeeCreated(
+          `${result?.data?.firstName || result?.firstName || data.firstName} ${
+            result?.data?.lastName || result?.lastName || data.lastName
+          }`
+        );
       }
 
       onSuccess(result);
       onOpenChange(false);
     } catch (err) {
       console.error("Failed to save attendee:", err);
-      setError(err instanceof Error ? err.message : "Failed to save attendee");
+
+      let errorMessage = "Failed to save attendee";
+
+      if (err instanceof Error) {
+        errorMessage = err.message;
+      }
+
+      setError(errorMessage);
+      adminToasts.attendeeError(isEditing ? "update" : "create", errorMessage);
     } finally {
       setIsSubmitting(false);
     }
@@ -166,12 +195,16 @@ export default function AttendeeForm({
                 control={form.control}
                 name='firstName'
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className='min-h-[80px]'>
                     <FormLabel>First Name</FormLabel>
                     <FormControl>
                       <Input
                         placeholder='Enter first name'
                         {...field}
+                        onChange={(e) => {
+                          field.onChange(e);
+                          handleInputChange();
+                        }}
                         disabled={isSubmitting}
                       />
                     </FormControl>
@@ -184,12 +217,16 @@ export default function AttendeeForm({
                 control={form.control}
                 name='lastName'
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className='min-h-[80px]'>
                     <FormLabel>Last Name</FormLabel>
                     <FormControl>
                       <Input
                         placeholder='Enter last name'
                         {...field}
+                        onChange={(e) => {
+                          field.onChange(e);
+                          handleInputChange();
+                        }}
                         disabled={isSubmitting}
                       />
                     </FormControl>
@@ -203,13 +240,17 @@ export default function AttendeeForm({
               control={form.control}
               name='email'
               render={({ field }) => (
-                <FormItem>
+                <FormItem className='min-h-[80px]'>
                   <FormLabel>Email Address (Optional)</FormLabel>
                   <FormControl>
                     <Input
                       type='email'
                       placeholder='Enter email address (optional)'
                       {...field}
+                      onChange={(e) => {
+                        field.onChange(e);
+                        handleInputChange();
+                      }}
                       disabled={isSubmitting}
                     />
                   </FormControl>
@@ -222,7 +263,7 @@ export default function AttendeeForm({
               control={form.control}
               name='groupId'
               render={({ field }) => (
-                <FormItem>
+                <FormItem className='min-h-[80px]'>
                   <FormLabel>Group (Optional)</FormLabel>
                   <Select
                     onValueChange={field.onChange}
@@ -246,13 +287,21 @@ export default function AttendeeForm({
                         ))}
                     </SelectContent>
                   </Select>
+                  {loadingGroups && (
+                    <p className='text-sm text-muted-foreground'>
+                      Loading groups...
+                    </p>
+                  )}
                   <FormMessage />
                 </FormItem>
               )}
             />
 
             {error && (
-              <div className='p-3 border border-red-200 rounded-md bg-red-50'>
+              <div
+                className='p-3 border border-red-200 rounded-md bg-red-50'
+                role='alert'
+              >
                 <p className='text-red-600 text-sm'>{error}</p>
               </div>
             )}
@@ -266,7 +315,10 @@ export default function AttendeeForm({
               >
                 Cancel
               </Button>
-              <Button type='submit' disabled={isSubmitting}>
+              <Button
+                type='submit'
+                disabled={isSubmitting || !form.formState.isValid}
+              >
                 {isSubmitting ? (
                   <div className='flex items-center gap-2'>
                     <LoadingSpinner size='sm' />

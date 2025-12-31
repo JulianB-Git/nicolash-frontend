@@ -10,9 +10,34 @@ import {
   RSVPStatus,
   Group,
 } from "@/types";
+import { logApiError } from "@/lib/errorLogging";
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api";
+
+// Helper function to parse API error responses
+async function parseAPIError(response: Response): Promise<APIError> {
+  let errorMessage = `HTTP ${response.status}: ${response.statusText}`;
+  let errorData: any = {};
+
+  try {
+    errorData = await response.json();
+
+    // Parse the nested error structure from the backend
+    if (errorData.error && errorData.error.message) {
+      errorMessage = errorData.error.message;
+    } else if (errorData.message) {
+      errorMessage = errorData.message;
+    } else if (typeof errorData === "string") {
+      errorMessage = errorData;
+    }
+  } catch (parseError) {
+    // If JSON parsing fails, use the default error message
+    console.warn("Failed to parse error response:", parseError);
+  }
+
+  return new APIError(errorMessage, response.status, errorData);
+}
 
 // Base API Error class
 class APIError extends Error {
@@ -42,13 +67,14 @@ class AuthorizationError extends APIError {
   }
 }
 
-// Enhanced fetchAPI function with authentication support
+// Enhanced fetchAPI function with authentication support and error logging
 async function fetchAPI<T>(
   endpoint: string,
   options: RequestInit = {},
   token?: string | null
 ): Promise<T> {
   const url = `${API_BASE_URL}${endpoint}`;
+  const method = options.method || "GET";
 
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
@@ -69,20 +95,23 @@ async function fetchAPI<T>(
     const response = await fetch(url, config);
 
     if (response.status === 401) {
-      throw new AuthenticationError("Authentication required");
+      const error = new AuthenticationError("Authentication required");
+      logApiError(error, endpoint, method, response.status);
+      throw error;
     }
 
     if (response.status === 403) {
-      throw new AuthorizationError("Access denied - user not on allowlist");
+      const error = new AuthorizationError(
+        "Access denied - user not on allowlist"
+      );
+      logApiError(error, endpoint, method, response.status);
+      throw error;
     }
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new APIError(
-        errorData.message || `HTTP ${response.status}: ${response.statusText}`,
-        response.status,
-        errorData
-      );
+      const error = await parseAPIError(response);
+      logApiError(error, endpoint, method, response.status, error.response);
+      throw error;
     }
 
     return await response.json();
@@ -90,7 +119,10 @@ async function fetchAPI<T>(
     if (error instanceof APIError) {
       throw error;
     }
-    throw new APIError("Network error occurred", 0, error);
+
+    const networkError = new APIError("Network error occurred", 0, error);
+    logApiError(networkError, endpoint, method);
+    throw networkError;
   }
 }
 
@@ -124,7 +156,7 @@ class AuthenticatedAPIClient {
 
   async createAttendee(data: CreateAttendeeRequest): Promise<Attendee> {
     const token = await this.getToken();
-    return fetchAPI<Attendee>(
+    const response = await fetchAPI<any>(
       "/attendees",
       {
         method: "POST",
@@ -132,6 +164,13 @@ class AuthenticatedAPIClient {
       },
       token
     );
+
+    // Handle the API response format: { success: true, data: { ...attendeeData } }
+    if (response && response.data) {
+      return response.data;
+    } else {
+      return response;
+    }
   }
 
   async updateAttendee(
@@ -139,7 +178,7 @@ class AuthenticatedAPIClient {
     data: UpdateAttendeeRequest
   ): Promise<Attendee> {
     const token = await this.getToken();
-    return fetchAPI<Attendee>(
+    const response = await fetchAPI<any>(
       `/attendees/${id}`,
       {
         method: "PUT",
@@ -147,6 +186,13 @@ class AuthenticatedAPIClient {
       },
       token
     );
+
+    // Handle the API response format: { success: true, data: { ...attendeeData } }
+    if (response && response.data) {
+      return response.data;
+    } else {
+      return response;
+    }
   }
 
   async deleteAttendee(id: string): Promise<void> {
@@ -284,12 +330,7 @@ class AuthenticatedAPIClient {
     }
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new APIError(
-        errorData.message || `HTTP ${response.status}: ${response.statusText}`,
-        response.status,
-        errorData
-      );
+      throw await parseAPIError(response);
     }
 
     const responseData = await response.json();

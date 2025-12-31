@@ -1,10 +1,19 @@
 "use client";
 
-import { useState } from "react";
-import { BulkUpload } from "@/components/admin/BulkUpload";
+import { useState, Suspense, lazy } from "react";
 import { useAuthenticatedApi } from "@/lib/useAuthenticatedApi";
 import { BulkUploadResult } from "@/types";
 import { toast } from "sonner";
+import ErrorBoundary from "@/components/ErrorBoundary";
+import { BulkUploadFallback } from "@/components/FallbackUI";
+import LoadingSpinner from "@/components/LoadingSpinner";
+
+// Lazy load the BulkUpload component
+const BulkUpload = lazy(() =>
+  import("@/components/admin/BulkUpload").then((module) => ({
+    default: module.BulkUpload,
+  }))
+);
 
 export default function AdminUploadPage() {
   const [isUploading, setIsUploading] = useState(false);
@@ -43,7 +52,13 @@ export default function AdminUploadPage() {
         </p>
       </div>
 
-      <BulkUpload onUpload={handleUpload} isUploading={isUploading} />
+      <ErrorBoundary context='Bulk Upload' fallback={<BulkUploadFallback />}>
+        <Suspense
+          fallback={<LoadingSpinner text='Loading upload interface...' />}
+        >
+          <BulkUpload onUpload={handleUpload} isUploading={isUploading} />
+        </Suspense>
+      </ErrorBoundary>
     </div>
   );
 }

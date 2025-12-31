@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import {
@@ -21,7 +20,8 @@ import {
   type RSVPSubmissionFormData,
 } from "@/lib/validations";
 import { publicApiClient } from "@/lib/api";
-import { Attendee, RSVPStatus } from "@/types";
+import { Attendee } from "@/types";
+import { rsvpToasts } from "@/lib/toastUtils";
 
 interface RSVPFormProps {
   attendee: Attendee;
@@ -40,6 +40,7 @@ export default function RSVPForm({
 
   const form = useForm<RSVPSubmissionFormData>({
     resolver: zodResolver(RSVPSubmissionSchema),
+    mode: "onChange", // Enable real-time validation
     defaultValues: {
       status:
         attendee.rsvpStatus !== "pending" ? attendee.rsvpStatus : undefined,
@@ -61,9 +62,16 @@ export default function RSVPForm({
       };
 
       setIsSubmitted(true);
+
+      // Show success toast
+      rsvpToasts.rsvpSubmitted(attendee.firstName, data.status);
+
       onSuccess(updatedAttendee);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to submit RSVP");
+      const errorMessage =
+        err instanceof Error ? err.message : "Failed to submit RSVP";
+      setError(errorMessage);
+      rsvpToasts.rsvpError(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
@@ -133,7 +141,7 @@ export default function RSVPForm({
           <div className='w-12 h-px bg-stone-300'></div>
         </div>
         <p className='text-stone-600 font-light leading-relaxed'>
-          Please let us know if you'll be able to attend our wedding.
+          Please let us know if you&apos;ll be able to attend our wedding.
         </p>
       </div>
 
@@ -149,7 +157,11 @@ export default function RSVPForm({
                 </FormLabel>
                 <FormControl>
                   <RadioGroup
-                    onValueChange={field.onChange}
+                    onValueChange={(value) => {
+                      field.onChange(value);
+                      // Clear any previous errors when user makes a selection
+                      if (error) setError(null);
+                    }}
                     value={field.value}
                     className='space-y-4'
                   >
@@ -166,10 +178,10 @@ export default function RSVPForm({
                         >
                           <div className='space-y-1'>
                             <div className='text-lg font-light text-emerald-700'>
-                              Yes, I'll be there! 🎉
+                              Yes, I&apos;ll be there! 🎉
                             </div>
                             <div className='text-sm text-stone-500 font-light'>
-                              I'm excited to celebrate with you
+                              I&apos;m excited to celebrate with you
                             </div>
                           </div>
                         </Label>
@@ -189,10 +201,10 @@ export default function RSVPForm({
                         >
                           <div className='space-y-1'>
                             <div className='text-lg font-light text-rose-700'>
-                              Sorry, I can't make it 😔
+                              Sorry, I can&apos;t make it 😔
                             </div>
                             <div className='text-sm text-stone-500 font-light'>
-                              I'll be thinking of you on your special day
+                              I&apos;ll be thinking of you on your special day
                             </div>
                           </div>
                         </Label>
@@ -206,7 +218,10 @@ export default function RSVPForm({
           />
 
           {error && (
-            <div className='p-4 border border-rose-200 rounded-lg bg-rose-50'>
+            <div
+              className='p-4 border border-rose-200 rounded-lg bg-rose-50'
+              role='alert'
+            >
               <p className='text-rose-600 text-sm font-light text-center'>
                 {error}
               </p>
@@ -226,7 +241,7 @@ export default function RSVPForm({
             <Button
               type='submit'
               disabled={isSubmitting || !form.formState.isValid}
-              className='flex-1 py-3 bg-stone-800 hover:bg-stone-700 text-white font-light tracking-wide rounded-full transition-all duration-200'
+              className='flex-1 py-3 bg-stone-800 hover:bg-stone-700 text-white font-light tracking-wide rounded-full transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed'
             >
               {isSubmitting ? (
                 <div className='flex items-center gap-2'>

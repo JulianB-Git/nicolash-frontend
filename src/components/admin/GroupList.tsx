@@ -18,6 +18,7 @@ import { useAuth } from "@clerk/nextjs";
 import { toast } from "sonner";
 import { Eye, Users, Trash2 } from "lucide-react";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import ConfirmDialog from "./ConfirmDialog";
 
 interface GroupListProps {
   onViewGroup: (group: GroupWithMembers) => void;
@@ -31,6 +32,9 @@ export default function GroupList({
   const [groups, setGroups] = useState<Group[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [deletingGroupId, setDeletingGroupId] = useState<string | null>(null);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [deletingGroup, setDeletingGroup] = useState<Group | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
   const { getToken } = useAuth();
 
   const fetchGroups = async () => {
@@ -62,25 +66,28 @@ export default function GroupList({
     }
   };
 
-  const handleDeleteGroup = async (groupId: string, groupName: string) => {
-    if (
-      !confirm(
-        `Are you sure you want to delete the group "${groupName}"? This will remove all member associations and cannot be undone.`
-      )
-    ) {
-      return;
-    }
+  const handleDeleteGroup = (group: Group) => {
+    setDeletingGroup(group);
+    setShowDeleteDialog(true);
+  };
 
-    setDeletingGroupId(groupId);
+  const confirmDeleteGroup = async () => {
+    if (!deletingGroup) return;
+
     try {
+      setIsDeleting(true);
+      setDeletingGroupId(deletingGroup.id);
       const apiClient = new AuthenticatedAPIClient(getToken);
-      await apiClient.deleteGroup(groupId);
+      await apiClient.deleteGroup(deletingGroup.id);
       toast.success("Group deleted successfully");
       fetchGroups(); // Refresh the list
+      setShowDeleteDialog(false);
+      setDeletingGroup(null);
     } catch (error) {
       console.error("Error deleting group:", error);
       toast.error("Failed to delete group");
     } finally {
+      setIsDeleting(false);
       setDeletingGroupId(null);
     }
   };
@@ -149,7 +156,7 @@ export default function GroupList({
                     <Button
                       variant='outline'
                       size='sm'
-                      onClick={() => handleDeleteGroup(group.id, group.name)}
+                      onClick={() => handleDeleteGroup(group)}
                       disabled={deletingGroupId === group.id}
                       className='text-destructive hover:text-destructive'
                     >
@@ -163,6 +170,23 @@ export default function GroupList({
           </TableBody>
         </Table>
       </CardContent>
+
+      {/* Delete Confirmation Dialog */}
+      <ConfirmDialog
+        open={showDeleteDialog}
+        onOpenChange={setShowDeleteDialog}
+        title='Delete Group'
+        description={
+          deletingGroup
+            ? `Are you sure you want to delete the group "${deletingGroup.name}"? This will remove all member associations and cannot be undone.`
+            : "Are you sure you want to delete this group?"
+        }
+        confirmText='Delete'
+        cancelText='Cancel'
+        onConfirm={confirmDeleteGroup}
+        isLoading={isDeleting}
+        variant='destructive'
+      />
     </Card>
   );
 }

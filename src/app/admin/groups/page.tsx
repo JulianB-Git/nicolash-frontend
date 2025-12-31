@@ -1,12 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense, lazy } from "react";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import GroupForm from "@/components/admin/GroupForm";
-import GroupList from "@/components/admin/GroupList";
-import GroupDetails from "@/components/admin/GroupDetails";
+import ErrorBoundary from "@/components/ErrorBoundary";
+import { GroupManagementFallback } from "@/components/FallbackUI";
+import LoadingSpinner from "@/components/LoadingSpinner";
 import { GroupWithMembers } from "@/types";
+
+// Lazy load group components for better performance
+const GroupForm = lazy(() => import("@/components/admin/GroupForm"));
+const GroupList = lazy(() => import("@/components/admin/GroupList"));
+const GroupDetails = lazy(() => import("@/components/admin/GroupDetails"));
 
 export default function AdminGroupsPage() {
   const [showCreateForm, setShowCreateForm] = useState(false);
@@ -48,23 +53,38 @@ export default function AdminGroupsPage() {
         </Button>
       </div>
 
-      <GroupList
-        onViewGroup={handleViewGroup}
-        refreshTrigger={refreshTrigger}
-      />
+      <ErrorBoundary
+        context='Group Management'
+        fallback={<GroupManagementFallback />}
+      >
+        <Suspense fallback={<LoadingSpinner text='Loading groups...' />}>
+          <GroupList
+            onViewGroup={handleViewGroup}
+            refreshTrigger={refreshTrigger}
+          />
+        </Suspense>
+      </ErrorBoundary>
 
-      <GroupForm
-        open={showCreateForm}
-        onOpenChange={setShowCreateForm}
-        onSuccess={handleGroupCreated}
-      />
+      <ErrorBoundary context='Group Form'>
+        <Suspense fallback={<div />}>
+          <GroupForm
+            open={showCreateForm}
+            onOpenChange={setShowCreateForm}
+            onSuccess={handleGroupCreated}
+          />
+        </Suspense>
+      </ErrorBoundary>
 
-      <GroupDetails
-        group={selectedGroup}
-        open={showGroupDetails}
-        onOpenChange={setShowGroupDetails}
-        onGroupUpdated={handleGroupUpdated}
-      />
+      <ErrorBoundary context='Group Details'>
+        <Suspense fallback={<div />}>
+          <GroupDetails
+            group={selectedGroup}
+            open={showGroupDetails}
+            onOpenChange={setShowGroupDetails}
+            onGroupUpdated={handleGroupUpdated}
+          />
+        </Suspense>
+      </ErrorBoundary>
     </div>
   );
 }

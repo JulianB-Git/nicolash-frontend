@@ -6,6 +6,8 @@ import RSVPSearch from "@/components/forms/RSVPSearch";
 import RSVPForm from "@/components/forms/RSVPForm";
 import AttendeeCard from "@/components/AttendeeCard";
 import GroupRSVPForm from "@/components/forms/GroupRSVPForm";
+import ErrorBoundary from "@/components/ErrorBoundary";
+import { RSVPSearchFallback } from "@/components/FallbackUI";
 import { Attendee, GroupWithMembers } from "@/types";
 
 export default function RSVPPage() {
@@ -93,7 +95,7 @@ export default function RSVPPage() {
                 </div>
               </div>
 
-              {/* RSVP Section */}
+              {/* RSVP Section with Error Boundary */}
               <div className='space-y-8 max-w-2xl mx-auto'>
                 <div className='space-y-4'>
                   <h2 className='text-4xl font-serif text-stone-800'>
@@ -104,7 +106,12 @@ export default function RSVPPage() {
                   </p>
                 </div>
 
-                <RSVPSearch onAttendeeSelect={handleAttendeeSelect} />
+                <ErrorBoundary
+                  context='RSVP Search'
+                  fallback={<RSVPSearchFallback />}
+                >
+                  <RSVPSearch onAttendeeSelect={handleAttendeeSelect} />
+                </ErrorBoundary>
               </div>
             </div>
           ) : showRSVPForm ? (
@@ -123,11 +130,13 @@ export default function RSVPPage() {
                   ← Back to search
                 </button>
               </div>
-              <RSVPForm
-                attendee={selectedAttendee}
-                onSuccess={handleRSVPSuccess}
-                onCancel={handleRSVPCancel}
-              />
+              <ErrorBoundary context='RSVP Form'>
+                <RSVPForm
+                  attendee={selectedAttendee}
+                  onSuccess={handleRSVPSuccess}
+                  onCancel={handleRSVPCancel}
+                />
+              </ErrorBoundary>
             </div>
           ) : showGroupRSVPForm ? (
             <div className='max-w-3xl mx-auto space-y-8'>
@@ -145,11 +154,13 @@ export default function RSVPPage() {
                   ← Back to search
                 </button>
               </div>
-              <GroupRSVPForm
-                attendee={selectedAttendee}
-                onSuccess={handleGroupRSVPSuccess}
-                onCancel={handleRSVPCancel}
-              />
+              <ErrorBoundary context='Group RSVP Form'>
+                <GroupRSVPForm
+                  attendee={selectedAttendee}
+                  onSuccess={handleGroupRSVPSuccess}
+                  onCancel={handleRSVPCancel}
+                />
+              </ErrorBoundary>
             </div>
           ) : (
             <div className='max-w-2xl mx-auto space-y-8'>
@@ -167,13 +178,15 @@ export default function RSVPPage() {
                   ← Back to search
                 </button>
               </div>
-              <AttendeeCard
-                attendee={selectedAttendee}
-                onRSVPClick={handleRSVPClick}
-                onGroupRSVPClick={
-                  selectedAttendee.groupId ? handleGroupRSVPClick : undefined
-                }
-              />
+              <ErrorBoundary context='Attendee Card'>
+                <AttendeeCard
+                  attendee={selectedAttendee}
+                  onRSVPClick={handleRSVPClick}
+                  onGroupRSVPClick={
+                    selectedAttendee.groupId ? handleGroupRSVPClick : undefined
+                  }
+                />
+              </ErrorBoundary>
             </div>
           )}
         </div>

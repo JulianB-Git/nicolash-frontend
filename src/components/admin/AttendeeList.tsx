@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import AttendeeForm from "./AttendeeForm";
 import ConfirmDialog from "./ConfirmDialog";
+import { adminToasts } from "@/lib/toastUtils";
 
 interface AttendeeListProps {
   className?: string;
@@ -65,7 +66,9 @@ export default function AttendeeList({ className }: AttendeeListProps) {
         setTotalPages(Math.ceil(response.total / limit));
       } catch (err) {
         console.error("Failed to fetch attendees:", err);
-        setError("Failed to load attendees. Please try again.");
+        const errorMessage = "Failed to load attendees. Please try again.";
+        setError(errorMessage);
+        adminToasts.loadingError("attendees");
       } finally {
         setLoading(false);
       }
@@ -140,11 +143,16 @@ export default function AttendeeList({ className }: AttendeeListProps) {
       // Refresh the attendee list
       await fetchAttendees(currentPage, pageSize);
 
+      adminToasts.attendeeDeleted(
+        `${deletingAttendee.firstName} ${deletingAttendee.lastName}`
+      );
       setShowDeleteDialog(false);
       setDeletingAttendee(undefined);
     } catch (err) {
       console.error("Failed to delete attendee:", err);
-      // Error handling could be improved with toast notifications
+      const errorMessage =
+        err instanceof Error ? err.message : "Failed to delete attendee";
+      adminToasts.attendeeError("delete", errorMessage);
     } finally {
       setIsDeleting(false);
     }

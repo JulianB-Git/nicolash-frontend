@@ -16,6 +16,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { BulkUploadSchema } from "@/lib/validations";
 import { BulkUploadResult, UploadError } from "@/types";
+import { toast } from "sonner";
 
 interface BulkUploadProps {
   onUpload: (file: File) => Promise<BulkUploadResult>;
@@ -76,23 +77,41 @@ export function BulkUpload({ onUpload, isUploading }: BulkUploadProps) {
     if (!uploadState.file) return;
 
     try {
-      setUploadState((prev) => ({ ...prev, progress: 10 }));
+      // Start with initial progress
+      setUploadState((prev) => ({ ...prev, progress: 5 }));
+
+      // Simulate progress updates during upload
+      const progressInterval = setInterval(() => {
+        setUploadState((prev) => {
+          const newProgress = Math.min(prev.progress + Math.random() * 15, 90);
+          return { ...prev, progress: newProgress };
+        });
+      }, 200);
 
       const result = await onUpload(uploadState.file);
 
+      // Clear interval and set to 100%
+      clearInterval(progressInterval);
       setUploadState((prev) => ({
         ...prev,
         uploadResult: result,
         progress: 100,
       }));
+
+      // Show success toast
+      toast.success(
+        `Upload completed! Created ${result.successfulCreations} attendees.`
+      );
     } catch (error) {
       console.error("Upload failed:", error);
+      const errorMessage =
+        error instanceof Error ? error.message : "Upload failed";
       setUploadState((prev) => ({
         ...prev,
-        validationError:
-          error instanceof Error ? error.message : "Upload failed",
+        validationError: errorMessage,
         progress: 0,
       }));
+      toast.error(errorMessage);
     }
   };
 
