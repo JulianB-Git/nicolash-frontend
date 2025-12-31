@@ -132,8 +132,8 @@ export default function AttendeeForm({
         });
         console.log("Update attendee API response:", result);
         adminToasts.attendeeUpdated(
-          `${result?.data?.firstName || result?.firstName || data.firstName} ${
-            result?.data?.lastName || result?.lastName || data.lastName
+          `${result?.firstName || data.firstName} ${
+            result?.lastName || data.lastName
           }`
         );
       } else {
@@ -146,8 +146,8 @@ export default function AttendeeForm({
         });
         console.log("Create attendee API response:", result);
         adminToasts.attendeeCreated(
-          `${result?.data?.firstName || result?.firstName || data.firstName} ${
-            result?.data?.lastName || result?.lastName || data.lastName
+          `${result?.firstName || data.firstName} ${
+            result?.lastName || data.lastName
           }`
         );
       }
