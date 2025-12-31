@@ -180,7 +180,14 @@ class AuthenticatedAPIClient {
 
   async getGroup(id: string): Promise<GroupWithMembers> {
     const token = await this.getToken();
-    return fetchAPI<GroupWithMembers>(`/groups/${id}`, {}, token);
+    const response = await fetchAPI<any>(`/groups/${id}`, {}, token);
+
+    // Handle the API response format: { success: true, data: { ...groupData } }
+    if (response && response.data) {
+      return response.data;
+    } else {
+      return response;
+    }
   }
 
   async getAllGroups(): Promise<Group[]> {
@@ -204,7 +211,48 @@ class AuthenticatedAPIClient {
       `/groups/${id}/members`,
       {
         method: "PUT",
-        body: JSON.stringify({ memberIds }),
+        body: JSON.stringify({ attendeeIds: memberIds }),
+      },
+      token
+    );
+  }
+
+  async addGroupMembers(id: string, memberIds: string[]): Promise<void> {
+    const token = await this.getToken();
+    return fetchAPI<void>(
+      `/groups/${id}/members`,
+      {
+        method: "PUT",
+        body: JSON.stringify({
+          attendeeIds: memberIds,
+          action: "add",
+        }),
+      },
+      token
+    );
+  }
+
+  async removeGroupMembers(id: string, memberIds: string[]): Promise<void> {
+    const token = await this.getToken();
+    return fetchAPI<void>(
+      `/groups/${id}/members`,
+      {
+        method: "PUT",
+        body: JSON.stringify({
+          attendeeIds: memberIds,
+          action: "remove",
+        }),
+      },
+      token
+    );
+  }
+
+  async deleteGroup(id: string): Promise<void> {
+    const token = await this.getToken();
+    return fetchAPI<void>(
+      `/groups/${id}`,
+      {
+        method: "DELETE",
       },
       token
     );
@@ -244,7 +292,19 @@ class AuthenticatedAPIClient {
       );
     }
 
-    return await response.json();
+    const responseData = await response.json();
+
+    // Handle the nested response structure from the API
+    // API returns: { success: boolean, data: { success: boolean, result: BulkUploadResult } }
+    if (responseData && responseData.data && responseData.data.result) {
+      return responseData.data.result;
+    } else if (responseData && responseData.result) {
+      // Fallback for direct result format
+      return responseData.result;
+    } else {
+      // Fallback for direct response format
+      return responseData;
+    }
   }
 }
 

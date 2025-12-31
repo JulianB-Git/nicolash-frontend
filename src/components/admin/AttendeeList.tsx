@@ -49,7 +49,7 @@ export default function AttendeeList({ className }: AttendeeListProps) {
   >(undefined);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const api = useAuthenticatedApi();
+  const { apiClient: api } = useAuthenticatedApi();
 
   const fetchAttendees = useCallback(
     async (page: number, limit: number) => {

@@ -16,7 +16,7 @@ import { publicApiClient } from "./api";
  * in a React component for admin operations.
  */
 export function useAdminOperations() {
-  const apiClient = useAuthenticatedApi();
+  const { apiClient } = useAuthenticatedApi();
 
   const fetchAttendees = async (page = 1, limit = 20) => {
     try {

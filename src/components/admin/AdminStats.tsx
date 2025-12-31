@@ -21,7 +21,7 @@ export default function AdminStats() {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const api = useAuthenticatedApi();
+  const { apiClient: api } = useAuthenticatedApi();
 
   useEffect(() => {
     const fetchStats = async () => {

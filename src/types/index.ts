@@ -24,6 +24,8 @@ export interface BulkUploadResult {
   duplicates: number;
   errors: UploadError[];
   createdAttendees: Attendee[];
+  groupsCreated?: Group[];
+  groupsUpdated?: Group[];
 }
 
 export interface UploadError {

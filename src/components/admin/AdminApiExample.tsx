@@ -15,7 +15,7 @@ export default function AdminApiExample() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const apiClient = useAuthenticatedApi();
+  const { apiClient } = useAuthenticatedApi();
 
   const fetchAttendees = async () => {
     setLoading(true);

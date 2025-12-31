@@ -51,7 +51,7 @@ export default function AttendeeForm({
   const [groups, setGroups] = useState<Group[]>([]);
   const [loadingGroups, setLoadingGroups] = useState(false);
 
-  const api = useAuthenticatedApi();
+  const { apiClient: api } = useAuthenticatedApi();
   const isEditing = !!attendee;
 
   const form = useForm<AttendeeFormData>({

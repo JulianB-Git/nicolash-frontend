@@ -9,9 +9,9 @@ import { useMemo } from "react";
  * This hook integrates with Clerk authentication to automatically include
  * Bearer tokens in API requests.
  *
- * @returns AuthenticatedAPIClient instance configured with Clerk token
+ * @returns Object containing AuthenticatedAPIClient instance configured with Clerk token
  */
-export function useAuthenticatedApi(): AuthenticatedAPIClient {
+export function useAuthenticatedApi(): { apiClient: AuthenticatedAPIClient } {
   const { getToken } = useAuth();
 
   const apiClient = useMemo(() => {
@@ -27,5 +27,5 @@ export function useAuthenticatedApi(): AuthenticatedAPIClient {
     });
   }, [getToken]);
 
-  return apiClient;
+  return { apiClient };
 }
