@@ -111,7 +111,7 @@ export default function VenueMapSection() {
             <div className='relative aspect-[4/3] rounded-lg overflow-hidden shadow-xl'>
               <iframe
                 src={`https://www.google.com/maps/embed/v1/place?key=${
-                  process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ""
+                  process.env.GOOGLE_MAPS_API_KEY || ""
                 }&q=${encodeURIComponent(venueAddress)}`}
                 width='100%'
                 height='100%'
