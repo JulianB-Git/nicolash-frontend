@@ -12,6 +12,8 @@
   --font-cursive: "Brush Script MT", "Lucida Handwriting", "Apple Chancery",
     cursive;
   --font-script: "Snell Roundhand", "Bradley Hand", "Brush Script MT", cursive;
+  --font-playfair: "Playfair Display", serif;
+  --font-lato: "Lato", sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -86,6 +88,14 @@
   --wedding-primary: oklch(0.646 0.222 41.116);
   --wedding-secondary: oklch(0.828 0.189 84.429);
   --wedding-accent: oklch(0.769 0.188 70.08);
+
+  /* Wedding Landing Page Theme Colors */
+  --wedding-cream: #fdfcf8;
+  --wedding-sage: #8b9d83;
+  --wedding-pink: #d4a5a5;
+  --wedding-slate: #4a5568;
+  --wedding-light-grey: #f7fafc;
+  --wedding-dark-grey: #2d3748;
 }
 
 .dark {
@@ -129,8 +139,23 @@
   * {
     @apply border-border outline-ring/50;
   }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-lato);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-playfair);
   }
 }
 
