@@ -39,7 +39,7 @@ export default function HeroSection() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={{ duration: 0.8, ease: "easeOut" as const }}
         >
           {/* Couple Names */}
           <h1 className='font-playfair text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-4 drop-shadow-lg'>
@@ -50,7 +50,7 @@ export default function HeroSection() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" as const }}
           className='space-y-2'
         >
           {/* Date & Time */}
@@ -68,7 +68,7 @@ export default function HeroSection() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+          transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" as const }}
           className='mt-12'
         >
           <CountdownTimer />
