@@ -20,16 +20,38 @@ export default function HeroSection() {
 
   return (
     <section className='relative h-screen w-full overflow-hidden'>
-      {/* Parallax Background */}
-      <motion.div style={{ y }} className='absolute inset-0 w-full h-[120%]'>
+      {/* Parallax Background - Mobile */}
+      <motion.div
+        style={{ y }}
+        className='absolute inset-0 w-full h-[120%] md:hidden'
+      >
         <Image
           src='/images/wedding/leading.jpg'
           alt="Nicole and Lashca's Wedding"
           fill
           priority
           className='object-cover'
-          quality={90}
+          quality={70}
         />
+        {/* Overlay for text readability */}
+        <div className='absolute inset-0 bg-black/20' />
+      </motion.div>
+
+      {/* Parallax Background - Desktop */}
+      <motion.div
+        style={{ y }}
+        className='absolute inset-0 w-full h-[120%] hidden md:block'
+      >
+        <div className='relative w-full h-full -translate-y-[15%]'>
+          <Image
+            src='/images/wedding/pillars.jpg'
+            alt="Nicole and Lashca's Wedding"
+            fill
+            priority
+            className='object-cover'
+            quality={70}
+          />
+        </div>
         {/* Overlay for text readability */}
         <div className='absolute inset-0 bg-black/20' />
       </motion.div>

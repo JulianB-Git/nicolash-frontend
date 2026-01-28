@@ -98,7 +98,7 @@ export default function OurStorySection() {
                   fill
                   priority
                   className='cover'
-                  quality={90}
+                  quality={70}
                 />
               </div>
             </motion.div>
@@ -123,7 +123,7 @@ export default function OurStorySection() {
                   fill
                   priority
                   className='object-cover'
-                  quality={90}
+                  quality={70}
                 />
               </div>
             </motion.div>
@@ -175,7 +175,7 @@ export default function OurStorySection() {
                   fill
                   priority
                   className='cover'
-                  quality={90}
+                  quality={70}
                 />
               </div>
             </div>

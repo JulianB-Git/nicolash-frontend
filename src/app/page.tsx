@@ -1,11 +1,19 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import PublicNavigation from "@/components/PublicNavigation";
-import Link from "next/link";
-import { useState, useEffect } from "react";
+import HeroSection from "@/components/wedding/HeroSection";
+import OurStorySection from "@/components/wedding/OurStorySection";
+import EventDetailsSection from "@/components/wedding/EventDetailsSection";
+import VenueMapSection from "@/components/wedding/VenueMapSection";
+import AccommodationSection from "@/components/wedding/AccommodationSection";
+import TransportSection from "@/components/wedding/TransportSection";
+import DressCodeSection from "@/components/wedding/DressCodeSection";
+import RegistrySection from "@/components/wedding/RegistrySection";
+import BridalPartySection from "@/components/wedding/BridalPartySection";
+import FAQSection from "@/components/wedding/FAQSection";
+import Footer from "@/components/wedding/Footer";
+import { useEffect, useState } from "react";
 
-export default function Home() {
+export default function WeddingLandingPage() {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [showContent, setShowContent] = useState(false);
 
@@ -21,7 +29,7 @@ export default function Home() {
       setImageLoaded(true);
       setShowContent(true);
     };
-    img.src = "/images/brushedhome.png";
+    img.src = "/images/wedding/leading.jpg";
   }, []);
 
   // Loading screen while image loads
@@ -37,7 +45,7 @@ export default function Home() {
             className='text-gray-700 text-xl'
             style={{ fontFamily: "var(--font-cursive)" }}
           >
-            Wait! Let me fix my hair
+            Getting ready!
           </p>
         </div>
       </div>
@@ -45,45 +53,18 @@ export default function Home() {
   }
 
   return (
-    <div
-      className={`min-h-screen w-full bg-cover bg-center bg-no-repeat relative transition-opacity duration-500 ${
-        imageLoaded ? "opacity-100" : "opacity-0"
-      }`}
-      style={{
-        backgroundImage: "url('/images/brushedhome.png')",
-      }}
-    >
-      {/* Navigation with transparent background */}
-      <PublicNavigation transparent />
-
-      {/* Content */}
-      <div className='relative z-10 flex items-center justify-center min-h-[calc(100vh-4rem)] px-4'>
-        <div className='text-center max-w-4xl mx-auto'>
-          {/* Names */}
-          <h1
-            className='text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-white mb-4 drop-shadow-2xl tracking-wide animate-fade-in'
-            style={{ fontFamily: "var(--font-cursive)" }}
-          >
-            Nicole & Lashca&apos;s
-          </h1>
-
-          {/* Wedding text */}
-          <h2
-            className='text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white mb-12 drop-shadow-2xl tracking-wide animate-fade-in-delay'
-            style={{ fontFamily: "var(--font-cursive)" }}
-          >
-            Wedding
-          </h2>
-
-          <Button
-            asChild
-            size='lg'
-            className='rounded-full px-12 py-6 text-lg font-semibold bg-white text-black hover:bg-white/90 transition-all duration-300 shadow-2xl hover:shadow-3xl transform hover:scale-105 animate-fade-in-delay-2'
-          >
-            <Link href='/rsvp'>RSVP</Link>
-          </Button>
-        </div>
-      </div>
-    </div>
+    <main className='overflow-x-hidden'>
+      <HeroSection />
+      <OurStorySection />
+      <EventDetailsSection />
+      <VenueMapSection />
+      <AccommodationSection />
+      <TransportSection />
+      <DressCodeSection />
+      <RegistrySection />
+      <BridalPartySection />
+      <FAQSection />
+      <Footer />
+    </main>
   );
 }

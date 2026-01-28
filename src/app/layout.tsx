@@ -5,9 +5,23 @@ import ErrorBoundary from "@/components/ErrorBoundary";
 import PerformanceMonitor from "@/components/PerformanceMonitor";
 import "./globals.css";
 
-export const metadata: Metadata = {
-  title: "Wedding RSVP",
-  description: "RSVP for our wedding celebration",
+export const metadata = {
+  title: "Nicole & Lashca's Wedding | April 1, 2026",
+  description:
+    "Join us for our South of France inspired wedding at Nibbana Farm, Tulbagh on April 1, 2026",
+  openGraph: {
+    title: "Nicole & Lashca's Wedding",
+    description: "Join us for our wedding celebration on April 1, 2026",
+    type: "website",
+    images: [
+      {
+        url: "/images/wedding/leading.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Nicole & Lashca's Wedding",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
