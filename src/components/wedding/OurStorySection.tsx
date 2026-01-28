@@ -92,12 +92,14 @@ export default function OurStorySection() {
                 className='w-full h-full flex items-center justify-center text-center p-8'
                 style={{ backgroundColor: "var(--wedding-light-grey)" }}
               >
-                <p
-                  className='font-playfair text-xl md:text-2xl italic'
-                  style={{ color: "var(--wedding-slate)" }}
-                >
-                  Photo Coming Soon
-                </p>
+                <Image
+                  src='/images/wedding/drop.jpg'
+                  alt="Nicole and Lashca's Wedding"
+                  fill
+                  priority
+                  className='cover'
+                  quality={90}
+                />
               </div>
             </motion.div>
           </div>
@@ -115,12 +117,14 @@ export default function OurStorySection() {
                 className='w-full h-full flex items-center justify-center text-center p-8'
                 style={{ backgroundColor: "var(--wedding-light-grey)" }}
               >
-                <p
-                  className='font-playfair text-xl md:text-2xl italic'
-                  style={{ color: "var(--wedding-slate)" }}
-                >
-                  Photo Coming Soon
-                </p>
+                <Image
+                  src='/images/wedding/pillars-wide.jpg'
+                  alt="Nicole and Lashca's Wedding"
+                  fill
+                  priority
+                  className='object-cover'
+                  quality={90}
+                />
               </div>
             </motion.div>
 
@@ -165,12 +169,14 @@ export default function OurStorySection() {
                 className='w-full h-full flex items-center justify-center text-center p-8'
                 style={{ backgroundColor: "var(--wedding-light-grey)" }}
               >
-                <p
-                  className='font-playfair text-xl md:text-2xl italic'
-                  style={{ color: "var(--wedding-slate)" }}
-                >
-                  Photo Coming Soon
-                </p>
+                <Image
+                  src='/images/wedding/spinning.jpg'
+                  alt="Nicole and Lashca's Wedding"
+                  fill
+                  priority
+                  className='cover'
+                  quality={90}
+                />
               </div>
             </div>
           </motion.div>

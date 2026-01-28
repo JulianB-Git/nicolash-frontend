@@ -23,7 +23,7 @@ export default function HeroSection() {
       {/* Parallax Background */}
       <motion.div style={{ y }} className='absolute inset-0 w-full h-[120%]'>
         <Image
-          src='/images/wedding/thefarm.jpg'
+          src='/images/wedding/leading.jpg'
           alt="Nicole and Lashca's Wedding"
           fill
           priority
