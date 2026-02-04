@@ -8,25 +8,24 @@ import AccommodationSection from "@/components/wedding/AccommodationSection";
 import TransportSection from "@/components/wedding/TransportSection";
 import DressCodeSection from "@/components/wedding/DressCodeSection";
 import RegistrySection from "@/components/wedding/RegistrySection";
+// import PhotoGallerySection from "@/components/wedding/PhotoGallerySection"; // Bento Grid version
+import PhotoGalleryLightbox from "@/components/wedding/PhotoGalleryLightbox"; // Lightbox version
 import BridalPartySection from "@/components/wedding/BridalPartySection";
 import FAQSection from "@/components/wedding/FAQSection";
 import Footer from "@/components/wedding/Footer";
 import { useEffect, useState } from "react";
 
 export default function WeddingLandingPage() {
-  const [imageLoaded, setImageLoaded] = useState(false);
   const [showContent, setShowContent] = useState(false);
 
   useEffect(() => {
     const img = new Image();
     img.onload = () => {
-      setImageLoaded(true);
       // Small delay to ensure smooth transition
       setTimeout(() => setShowContent(true), 100);
     };
     img.onerror = () => {
       // If image fails to load, show content anyway
-      setImageLoaded(true);
       setShowContent(true);
     };
     img.src = "/images/wedding/leading.jpg";
@@ -56,6 +55,7 @@ export default function WeddingLandingPage() {
     <main className='overflow-x-hidden'>
       <HeroSection />
       <OurStorySection />
+      <PhotoGalleryLightbox />
       <EventDetailsSection />
       <VenueMapSection />
       <AccommodationSection />

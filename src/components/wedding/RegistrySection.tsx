@@ -52,7 +52,7 @@ export default function RegistrySection() {
     <section
       ref={ref}
       className='py-16 sm:py-20 md:py-24 lg:py-32 px-4 sm:px-6 lg:px-8'
-      style={{ backgroundColor: "var(--wedding-cream)" }}
+      style={{ backgroundColor: "var(--wedding-dusty-pink)" }}
     >
       <div className='max-w-5xl mx-auto'>
         {/* Section Heading */}

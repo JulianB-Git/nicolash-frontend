@@ -25,26 +25,28 @@ export default function DressCodeSection() {
   };
 
   const ladiesColors = [
-    { name: "Dusty Pink", hex: "#D4A5A5" },
+    { name: "Pink", hex: "#FFC0CB" },
     { name: "Salmon", hex: "#FA8072" },
     { name: "Coral", hex: "#FF7F50" },
-    { name: "Sage Green", hex: "#8B9D83" },
-    { name: "Soft Yellow", hex: "#F4E4C1" },
-    { name: "Lavender", hex: "#E6E6FA" },
+    { name: "Green", hex: "#49a422ff" },
+    { name: "Soft Yellow", hex: "#fff75fff" },
+    { name: "Lavender", hex: "#bb7cffff" },
   ];
 
   const mensColors = [
-    { name: "Pink", hex: "#FFC0CB" },
-    { name: "Salmon", hex: "#FA8072" },
-    { name: "Sand", hex: "#C2B280" },
-    { name: "Beige", hex: "#F5F5DC" },
+    { name: "Pink", hex: "#624600ff" },
+    { name: "Salmon", hex: "#989078ff" },
+    { name: "Sand", hex: "#e1adadff" },
+    { name: "Beige", hex: "#9a9fa5ff" },
+    { name: "Beige", hex: "#7b90a9ff" },
+    { name: "Beige", hex: "#2b4563ff" },
   ];
 
   return (
     <section
       ref={ref}
       className='py-16 sm:py-20 md:py-24 lg:py-32 px-4 sm:px-6 lg:px-8'
-      style={{ backgroundColor: "var(--wedding-light-grey)" }}
+      style={{ backgroundColor: "var(--wedding-light-sage)" }}
     >
       <div className='max-w-6xl mx-auto'>
         {/* Section Heading */}
@@ -162,12 +164,12 @@ export default function DressCodeSection() {
                         className='w-16 h-16 rounded-full shadow-md'
                         style={{ backgroundColor: color.hex }}
                       />
-                      <span
+                      {/* <span
                         className='font-lato text-xs text-center'
                         style={{ color: "var(--wedding-slate)" }}
                       >
                         {color.name}
-                      </span>
+                      </span> */}
                     </motion.div>
                   ))}
                 </motion.div>
@@ -248,7 +250,7 @@ export default function DressCodeSection() {
                   variants={staggerChildren}
                   initial='hidden'
                   animate={inView ? "visible" : "hidden"}
-                  className='grid grid-cols-2 gap-3'
+                  className='grid grid-cols-3 gap-3'
                 >
                   {mensColors.map((color) => (
                     <motion.div
@@ -261,12 +263,12 @@ export default function DressCodeSection() {
                         className='w-16 h-16 rounded-full shadow-md'
                         style={{ backgroundColor: color.hex }}
                       />
-                      <span
+                      {/* <span
                         className='font-lato text-xs text-center'
                         style={{ color: "var(--wedding-slate)" }}
                       >
                         {color.name}
-                      </span>
+                      </span> */}
                     </motion.div>
                   ))}
                 </motion.div>

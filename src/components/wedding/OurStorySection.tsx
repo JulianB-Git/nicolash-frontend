@@ -38,7 +38,7 @@ export default function OurStorySection() {
     <section
       ref={ref}
       className='py-16 sm:py-20 md:py-24 lg:py-32 px-4 sm:px-6 lg:px-8'
-      style={{ backgroundColor: "var(--wedding-cream)" }}
+      style={{ backgroundColor: "var(--wedding-light-sage)" }}
     >
       <div className='max-w-6xl mx-auto'>
         {/* Section Heading */}
@@ -86,7 +86,7 @@ export default function OurStorySection() {
               initial='hidden'
               animate={inView ? "visible" : "hidden"}
               className='relative aspect-[4/3] rounded-lg overflow-hidden shadow-xl'
-              style={{ border: "8px solid var(--wedding-sage)" }}
+              // style={{ border: "8px solid var(--wedding-sage)" }}
             >
               <div
                 className='w-full h-full flex items-center justify-center text-center p-8'
@@ -111,7 +111,7 @@ export default function OurStorySection() {
               initial='hidden'
               animate={inView ? "visible" : "hidden"}
               className='relative aspect-[4/3] rounded-lg overflow-hidden shadow-xl order-2 md:order-1'
-              style={{ border: "8px solid var(--wedding-pink)" }}
+              // style={{ border: "8px solid var(--wedding-pink)" }}
             >
               <div
                 className='w-full h-full flex items-center justify-center text-center p-8'
@@ -163,7 +163,7 @@ export default function OurStorySection() {
           >
             <div
               className='relative aspect-[3/2] rounded-lg overflow-hidden shadow-xl'
-              style={{ border: "8px solid var(--wedding-sage)" }}
+              // style={{ border: "8px solid var(--wedding-sage)" }}
             >
               <div
                 className='w-full h-full flex items-center justify-center text-center p-8'
