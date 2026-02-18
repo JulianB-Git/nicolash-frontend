@@ -25,21 +25,21 @@ export default function DressCodeSection() {
   };
 
   const ladiesColors = [
-    { name: "Pink", hex: "#FFC0CB" },
-    { name: "Salmon", hex: "#FA8072" },
-    { name: "Coral", hex: "#FF7F50" },
-    { name: "Green", hex: "#49a422ff" },
-    { name: "Soft Yellow", hex: "#fff75fff" },
-    { name: "Lavender", hex: "#bb7cffff" },
+    { name: "Pink", hex: "#DE3290" },
+    { name: "Salmon", hex: "#AA1846" },
+    { name: "Coral", hex: "#C5543B" },
+    { name: "Green", hex: "#7D8828" },
+    { name: "Soft Yellow", hex: "#FBB450" },
+    { name: "Lavender", hex: "#4C3261" },
   ];
 
   const mensColors = [
-    { name: "Pink", hex: "#624600ff" },
-    { name: "Salmon", hex: "#989078ff" },
+    { name: "Brown", hex: "#624600ff" },
+    { name: "Taupe", hex: "#989078ff" },
     { name: "Sand", hex: "#e1adadff" },
-    { name: "Beige", hex: "#9a9fa5ff" },
-    { name: "Beige", hex: "#7b90a9ff" },
-    { name: "Beige", hex: "#2b4563ff" },
+    { name: "Light Grey", hex: "#9a9fa5ff" },
+    { name: "Slate Blue", hex: "#7b90a9ff" },
+    { name: "Navy", hex: "#2b4563ff" },
   ];
 
   return (
@@ -60,7 +60,7 @@ export default function DressCodeSection() {
             className='font-playfair text-4xl sm:text-5xl md:text-6xl font-bold mb-4'
             style={{ color: "var(--wedding-dark-grey)" }}
           >
-            Dress Code
+            Dress To Impress
           </h2>
           <p
             className='font-playfair text-2xl sm:text-3xl md:text-4xl italic'
@@ -72,7 +72,23 @@ export default function DressCodeSection() {
             className='font-lato text-lg sm:text-xl mt-4'
             style={{ color: "var(--wedding-slate)" }}
           >
-            Think garden party elegance meets Mediterranean charm
+            Think{" "}
+            <b>
+              bright tones, playful frills, soft textures, and effortless
+              elegance.
+            </b>{" "}
+            Linen suits in shades of <b>pink, salmon or sand</b> are highly
+            encouraged - have fun with it!
+          </p>
+          <p
+            className='font-lato text-lg sm:text-xl mt-4'
+            style={{ color: "var(--wedding-slate)" }}
+          >
+            Ladies, please consider <b>comfortable heels or block heels</b>, as
+            this is a <b>garden wedding with cobblestone flooring.</b> The Cape
+            Town weather can be unpredictable - especially nestled between the
+            mountains - so we recommend brining a <b>light cardigan or wrap</b>,
+            just in case.
           </p>
         </motion.div>
 
@@ -98,21 +114,21 @@ export default function DressCodeSection() {
                   className='font-lato text-base sm:text-lg flex items-start gap-2'
                   style={{ color: "var(--wedding-slate)" }}
                 >
-                  <span className='text-2xl'>✨</span>
+                  {/* <span className='text-2xl'>✨</span> */}
                   <span>Bright, vibrant tones encouraged</span>
                 </p>
                 <p
                   className='font-lato text-base sm:text-lg flex items-start gap-2'
                   style={{ color: "var(--wedding-slate)" }}
                 >
-                  <span className='text-2xl'>💃</span>
+                  {/* <span className='text-2xl'>💃</span> */}
                   <span>Frills, florals, and fun patterns welcome</span>
                 </p>
                 <p
                   className='font-lato text-base sm:text-lg flex items-start gap-2'
                   style={{ color: "var(--wedding-slate)" }}
                 >
-                  <span className='text-2xl'>🌸</span>
+                  {/* <span className='text-2xl'>🌸</span> */}
                   <span>Flowing fabrics and garden party vibes</span>
                 </p>
               </div>
@@ -135,7 +151,7 @@ export default function DressCodeSection() {
                   className='font-lato text-base sm:text-lg'
                   style={{ color: "var(--wedding-slate)" }}
                 >
-                  Black, white, or blue
+                  No white, black, blue or plain pastel colours
                 </p>
               </div>
 
@@ -197,21 +213,21 @@ export default function DressCodeSection() {
                   className='font-lato text-base sm:text-lg flex items-start gap-2'
                   style={{ color: "var(--wedding-slate)" }}
                 >
-                  <span className='text-2xl'>👔</span>
+                  {/* <span className='text-2xl'>👔</span> */}
                   <span>Linen suits for that relaxed elegance</span>
                 </p>
                 <p
                   className='font-lato text-base sm:text-lg flex items-start gap-2'
                   style={{ color: "var(--wedding-slate)" }}
                 >
-                  <span className='text-2xl'>🌅</span>
+                  {/* <span className='text-2xl'>🌅</span> */}
                   <span>Light, breathable fabrics</span>
                 </p>
                 <p
                   className='font-lato text-base sm:text-lg flex items-start gap-2'
                   style={{ color: "var(--wedding-slate)" }}
                 >
-                  <span className='text-2xl'>🎨</span>
+                  {/* <span className='text-2xl'>🎨</span> */}
                   <span>Soft, warm tones preferred</span>
                 </p>
               </div>
@@ -234,7 +250,7 @@ export default function DressCodeSection() {
                   className='font-lato text-base sm:text-lg'
                   style={{ color: "var(--wedding-slate)" }}
                 >
-                  Black suits
+                  No black suits or tuxedos
                 </p>
               </div>
 
@@ -282,13 +298,30 @@ export default function DressCodeSection() {
           variants={fadeInVariants}
           initial='hidden'
           animate={inView ? "visible" : "hidden"}
-          className='mt-12 text-center'
+          className='mt-12 text-center space-y-4'
         >
           <p
             className='font-lato text-lg sm:text-xl italic'
             style={{ color: "var(--wedding-slate)" }}
           >
-            Most importantly, wear something that makes you feel fabulous! 💕
+            Have fun with your look and lean into colour - this is a
+            celebration, not a formal black-tie affair.
+          </p>
+          <p
+            className='font-lato text-base sm:text-lg'
+            style={{ color: "var(--wedding-slate)" }}
+          >
+            Have a look at our{" "}
+            <a
+              href='https://uk.pinterest.com/pin/410672059794716908/'
+              target='_blank'
+              rel='noopener noreferrer'
+              className='underline hover:opacity-70 transition-opacity'
+              style={{ color: "var(--wedding-pink)" }}
+            >
+              Pinterest board
+            </a>{" "}
+            for inspiration.
           </p>
         </motion.div>
       </div>

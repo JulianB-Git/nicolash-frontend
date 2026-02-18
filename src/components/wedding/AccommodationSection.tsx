@@ -87,7 +87,7 @@ export default function AccommodationSection() {
     <section
       ref={ref}
       className='py-16 sm:py-20 md:py-24 lg:py-32 px-4 sm:px-6 lg:px-8'
-      style={{ backgroundColor: "var(--wedding-light-sage)" }}
+      style={{ backgroundColor: "var(--wedding-dusty-pink)" }}
     >
       <div className='max-w-7xl mx-auto'>
         {/* Section Heading */}
@@ -192,7 +192,7 @@ export default function AccommodationSection() {
         </motion.div>
 
         {/* Additional Info */}
-        <motion.div
+        {/* <motion.div
           variants={fadeInVariants}
           initial='hidden'
           animate={inView ? "visible" : "hidden"}
@@ -205,7 +205,7 @@ export default function AccommodationSection() {
             Need help with accommodation? Feel free to reach out to us for
             recommendations!
           </p>
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   );

@@ -19,14 +19,14 @@ export default function VenueMapSection() {
 
   const venueAddress = "Nibbana Farm, Tulbagh/Wolseley, South Africa";
   const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-    venueAddress
+    venueAddress,
   )}`;
 
   return (
     <section
       ref={ref}
       className='py-16 sm:py-20 md:py-24 lg:py-32 px-4 sm:px-6 lg:px-8'
-      style={{ backgroundColor: "var(--wedding-dusty-pink)" }}
+      style={{ backgroundColor: "var(--wedding-cream)" }}
     >
       <div className='max-w-6xl mx-auto'>
         {/* Section Heading */}

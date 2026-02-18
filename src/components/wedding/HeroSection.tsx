@@ -1,16 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import CountdownTimer from "./CountdownTimer";
 
 export default function HeroSection() {
   const [mounted, setMounted] = useState(false);
-  const { scrollY } = useScroll();
-
-  // Parallax effect - background moves slower than scroll
-  const y = useTransform(scrollY, [0, 500], [0, 250]);
 
   useEffect(() => {
     setMounted(true);
@@ -19,71 +14,83 @@ export default function HeroSection() {
   if (!mounted) return null;
 
   return (
-    <section className='relative h-screen w-full overflow-hidden'>
-      {/* Parallax Background - Mobile */}
-      <motion.div
-        style={{ y }}
-        className='absolute inset-0 w-full h-[120%] md:hidden'
-      >
-        <Image
-          src='/images/wedding/leading.jpg'
-          alt="Nicole and Lashca's Wedding"
-          fill
-          priority
-          className='object-cover'
-          quality={70}
-        />
-        {/* Overlay for text readability */}
-        <div className='absolute inset-0 bg-black/20' />
-      </motion.div>
-
-      {/* Parallax Background - Desktop */}
-      <motion.div
-        style={{ y }}
-        className='absolute inset-0 w-full h-[120%] hidden md:block'
-      >
-        <div className='relative w-full h-full -translate-y-[15%]'>
-          <Image
-            src='/images/wedding/pillars.jpg'
-            alt="Nicole and Lashca's Wedding"
-            fill
-            priority
-            className='object-cover'
-            quality={70}
-          />
-        </div>
-        {/* Overlay for text readability */}
-        <div className='absolute inset-0 bg-black/20' />
-      </motion.div>
-
+    <section
+      className='relative min-h-screen w-full overflow-hidden flex items-center justify-center py-12 md:py-20'
+      style={{ backgroundColor: "var(--wedding-sage)" }}
+    >
       {/* Content */}
       <div className='relative z-10 flex flex-col items-center justify-center h-full px-4 text-center text-white'>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" as const }}
+          className='space-y-4 md:space-y-8'
         >
-          {/* Couple Names */}
-          <h1 className='font-playfair text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-4 drop-shadow-lg'>
-            Nicole & Lashca
-          </h1>
-        </motion.div>
+          {/* Couple Names - Large Script Style */}
+          <div className='space-y-1'>
+            <h1
+              className='text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-normal'
+              style={{ fontFamily: "var(--font-great-vibes)" }}
+            >
+              N
+            </h1>
+            <p
+              className='text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-normal'
+              style={{ fontFamily: "var(--font-great-vibes)" }}
+            >
+              &
+            </p>
+            <h1
+              className='text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-normal'
+              style={{ fontFamily: "var(--font-great-vibes)" }}
+            >
+              L
+            </h1>
+          </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" as const }}
-          className='space-y-2'
-        >
-          {/* Date & Time */}
-          <p className='font-lato text-xl sm:text-2xl md:text-3xl font-light'>
-            1 April 2026 @ 14:30
-          </p>
+          {/* Invitation Text */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" as const }}
+            className='space-y-3 md:space-y-6 mt-6 md:mt-12'
+          >
+            <p className='font-lato text-sm sm:text-base md:text-lg tracking-widest uppercase'>
+              Cordially invites you to
+              <br />
+              their wedding on
+            </p>
 
-          {/* Venue */}
-          <p className='font-lato text-lg sm:text-xl md:text-2xl font-light'>
-            Nibbana Farm, Tulbagh/Wolseley, South Africa
-          </p>
+            {/* Date with decorative lines */}
+            <div className='flex items-center justify-center gap-4 my-3 md:my-8'>
+              <div className='w-12 sm:w-16 h-px bg-white/60'></div>
+              <div className='text-center'>
+                <p className='font-lato text-3xl sm:text-4xl md:text-5xl font-light tracking-wider'>
+                  01.04.2026
+                </p>
+                <p className='font-lato text-sm sm:text-base md:text-lg tracking-widest uppercase mt-2'>
+                  Tuesday, 2:30PM
+                </p>
+              </div>
+              <div className='w-12 sm:w-16 h-px bg-white/60'></div>
+            </div>
+
+            {/* Venue */}
+            <div className='space-y-1 md:space-y-2 mt-3 md:mt-8'>
+              <p
+                className='text-2xl sm:text-3xl md:text-4xl'
+                style={{ fontFamily: "var(--font-great-vibes)" }}
+              >
+                Venue
+              </p>
+              <p className='font-lato text-base sm:text-lg md:text-xl font-light'>
+                Nibbana Farm
+              </p>
+              <p className='font-lato text-sm sm:text-base md:text-lg font-light'>
+                Tulbagh/Wolseley, South Africa
+              </p>
+            </div>
+          </motion.div>
         </motion.div>
 
         {/* Countdown Timer */}
@@ -91,7 +98,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" as const }}
-          className='mt-12'
+          className='mt-6 md:mt-16'
         >
           <CountdownTimer />
         </motion.div>

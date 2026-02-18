@@ -60,7 +60,7 @@ export default function EventDetailsSection() {
           className='font-playfair text-4xl sm:text-5xl md:text-6xl font-bold text-center mb-4'
           style={{ color: "var(--wedding-dark-grey)" }}
         >
-          Event Details
+          Wedding Program
         </motion.h2>
 
         <motion.p
@@ -126,7 +126,7 @@ export default function EventDetailsSection() {
         </motion.div>
 
         {/* Venue Information */}
-        <motion.div
+        {/* <motion.div
           variants={fadeInVariants}
           initial='hidden'
           animate={inView ? "visible" : "hidden"}
@@ -144,6 +144,21 @@ export default function EventDetailsSection() {
             style={{ color: "var(--wedding-slate)" }}
           >
             Tulbagh/Wolseley, South Africa
+          </p>
+        </motion.div> */}
+        <motion.div
+          variants={fadeInVariants}
+          initial='hidden'
+          animate={inView ? "visible" : "hidden"}
+          className='mt-12 p-8 rounded-lg shadow-lg text-center'
+          style={{ backgroundColor: "var(--wedding-light-grey)" }}
+        >
+          <p
+            className='font-playfair text-xl sm:text-2xl italic'
+            style={{ color: "var(--wedding-dark-grey)" }}
+          >
+            Share your love and memories using #NicoLashEverAfter - so that we
+            can relive our day through your eyes.
           </p>
         </motion.div>
       </div>

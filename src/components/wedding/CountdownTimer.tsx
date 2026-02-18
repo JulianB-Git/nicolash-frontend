@@ -22,7 +22,7 @@ export default function CountdownTimer() {
     if (!isClient) return;
 
     const weddingDate = new Date(
-      process.env.NEXT_PUBLIC_WEDDING_DATE || "2026-04-01T14:30:00+02:00"
+      process.env.NEXT_PUBLIC_WEDDING_DATE || "2026-04-01T14:30:00+02:00",
     );
 
     const calculateTimeLeft = (): TimeLeft => {
@@ -36,7 +36,7 @@ export default function CountdownTimer() {
       return {
         days: Math.floor(difference / (1000 * 60 * 60 * 24)),
         hours: Math.floor(
-          (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+          (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
         ),
         minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
         seconds: Math.floor((difference % (1000 * 60)) / 1000),

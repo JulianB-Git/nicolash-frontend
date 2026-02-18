@@ -7,11 +7,13 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: ui-sans-serif, system-ui, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Consolas,
-    "Liberation Mono", Menlo, monospace;
-  --font-cursive: "Brush Script MT", "Lucida Handwriting", "Apple Chancery",
-    cursive;
+  --font-mono:
+    ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo,
+    monospace;
+  --font-cursive:
+    "Brush Script MT", "Lucida Handwriting", "Apple Chancery", cursive;
   --font-script: "Snell Roundhand", "Bradley Hand", "Brush Script MT", cursive;
+  --font-great-vibes: "Great Vibes", cursive;
   --font-playfair: "Playfair Display", serif;
   --font-lato: "Lato", sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);

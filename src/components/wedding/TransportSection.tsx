@@ -28,7 +28,7 @@ export default function TransportSection() {
     <section
       ref={ref}
       className='py-16 sm:py-20 md:py-24 lg:py-32 px-4 sm:px-6 lg:px-8'
-      style={{ backgroundColor: "var(--wedding-dusty-pink)" }}
+      style={{ backgroundColor: "var(--wedding-cream)" }}
     >
       <div className='max-w-5xl mx-auto'>
         {/* Section Heading */}
@@ -36,13 +36,13 @@ export default function TransportSection() {
           variants={fadeInVariants}
           initial='hidden'
           animate={inView ? "visible" : "hidden"}
-          className='font-playfair text-4xl sm:text-5xl md:text-6xl font-bold text-center mb-4'
+          className='font-playfair text-4xl sm:text-5xl md:text-6xl font-bold text-center mb-12 md:mb-16'
           style={{ color: "var(--wedding-dark-grey)" }}
         >
           Getting There
         </motion.h2>
 
-        <motion.p
+        {/* <motion.p
           variants={fadeInVariants}
           initial='hidden'
           animate={inView ? "visible" : "hidden"}
@@ -50,7 +50,7 @@ export default function TransportSection() {
           style={{ color: "var(--wedding-slate)" }}
         >
           Plan your journey to Tulbagh with these transport options
-        </motion.p>
+        </motion.p> */}
 
         {/* Transport Options */}
         <motion.div
@@ -79,6 +79,13 @@ export default function TransportSection() {
             </h3>
 
             <div className='space-y-3'>
+              <p
+                className='font-lato text-base sm:text-lg text-center'
+                style={{ color: "var(--wedding-slate)" }}
+              >
+                Please note that Uber prices fluctuates depending on demand and
+                time of day.
+              </p>
               <div
                 className='flex justify-between items-center py-2 border-b'
                 style={{ borderColor: "var(--wedding-light-grey)" }}
@@ -135,7 +142,8 @@ export default function TransportSection() {
               className='font-lato text-sm sm:text-base mt-6 text-center italic'
               style={{ color: "var(--wedding-slate)" }}
             >
-              Book in advance for the best rates
+              Local Uber availability may be limited late at night - we
+              recommend planning return trips in advance.
             </p>
           </motion.div>
 
@@ -163,8 +171,8 @@ export default function TransportSection() {
                 className='font-lato text-base sm:text-lg text-center'
                 style={{ color: "var(--wedding-slate)" }}
               >
-                Rent a car for flexibility and convenience during your stay in
-                the winelands.
+                Hiring a car is highly recommended for flexibility, especially
+                if you plan to explore the Winelands.
               </p>
 
               <div className='text-center py-4'>
@@ -195,17 +203,17 @@ export default function TransportSection() {
               </motion.a>
             </div>
 
-            <p
+            {/* <p
               className='font-lato text-sm sm:text-base mt-6 text-center italic'
               style={{ color: "var(--wedding-slate)" }}
             >
               Perfect for exploring the beautiful surroundings
-            </p>
+            </p> */}
           </motion.div>
         </motion.div>
 
         {/* Additional Info */}
-        <motion.div
+        {/* <motion.div
           variants={fadeInVariants}
           initial='hidden'
           animate={inView ? "visible" : "hidden"}
@@ -219,7 +227,7 @@ export default function TransportSection() {
             💡 <strong>Tip:</strong> Consider carpooling with other guests to
             make the journey more fun and affordable!
           </p>
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   );

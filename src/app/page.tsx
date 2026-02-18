@@ -55,7 +55,7 @@ export default function WeddingLandingPage() {
     <main className='overflow-x-hidden'>
       <HeroSection />
       <OurStorySection />
-      <PhotoGalleryLightbox />
+      {/* <PhotoGalleryLightbox /> */}
       <EventDetailsSection />
       <VenueMapSection />
       <AccommodationSection />

@@ -26,6 +26,21 @@ const registries: Registry[] = [
     url: "https://www.woolworths.co.za",
     description: "Quality home goods",
   },
+  {
+    name: "Volpes",
+    url: "https://bash.com/volpes?redirect=www.volpes.co.za",
+    description: "The home of linen",
+  },
+  {
+    name: "Le Crueset",
+    url: "https://www.lecreuset.co.za/",
+    description: "Finest colourful cookware",
+  },
+  {
+    name: "Cori Craft",
+    url: "https://coricraft.co.za/",
+    description: "Quality home furniture",
+  },
 ];
 
 export default function RegistrySection() {
@@ -52,7 +67,7 @@ export default function RegistrySection() {
     <section
       ref={ref}
       className='py-16 sm:py-20 md:py-24 lg:py-32 px-4 sm:px-6 lg:px-8'
-      style={{ backgroundColor: "var(--wedding-dusty-pink)" }}
+      style={{ backgroundColor: "var(--wedding-cream)" }}
     >
       <div className='max-w-5xl mx-auto'>
         {/* Section Heading */}
@@ -81,8 +96,8 @@ export default function RegistrySection() {
             style={{ color: "var(--wedding-slate)" }}
           >
             Your presence at our wedding is the greatest gift of all. However,
-            if you wish to honor us with a gift, we've registered at the
-            following stores for home vouchers.
+            if you wish to honor us with a gift, have a look at the following
+            stores for home vouchers.
           </p>
         </motion.div>
 

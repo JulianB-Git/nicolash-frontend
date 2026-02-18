@@ -3,10 +3,12 @@
 import { motion } from "framer-motion";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { User } from "lucide-react";
+import Image from "next/image";
 
 interface BridalPartyMember {
   name: string;
   role: string;
+  img: string;
 }
 
 interface BridalPartyGroup {
@@ -19,34 +21,98 @@ const bridalPartyGroups: BridalPartyGroup[] = [
   {
     title: "Groomsmen",
     members: [
-      { name: "Nino Kalondo", role: "Best Man" },
-      { name: "John-Paul Karuaihe", role: "Groomsman" },
-      { name: "Julian Benade", role: "Groomsman" },
-      { name: "Audwin Mouton", role: "Groomsman" },
-      { name: "Hugo Wasserfall", role: "Groomsman" },
-      { name: "Placido Mutinde", role: "Groomsman" },
+      {
+        name: "Nino Kalondo",
+        role: "Best Man",
+        img: "/images/bridal-party/Nino.jpg",
+      },
+      {
+        name: "John-Paul Karuaihe",
+        role: "Groomsman",
+        img: "/images/bridal-party/JP.jpg",
+      },
+      {
+        name: "Julian Benade",
+        role: "Groomsman",
+        img: "/images/bridal-party/Julian1.jpg",
+      },
+      {
+        name: "Audwin Mouton",
+        role: "Groomsman",
+        img: "/images/bridal-party/Audwin.jpg",
+      },
+      {
+        name: "Hugo Wasserfall",
+        role: "Groomsman",
+        img: "/images/bridal-party/Hugo.jpg",
+      },
+      {
+        name: "Placido Mutinde",
+        role: "Groomsman",
+        img: "/images/bridal-party/Placido.jpg",
+      },
     ],
     color: "var(--wedding-sage)",
   },
   {
     title: "Bridesmaids",
     members: [
-      { name: "Siobhan Carew", role: "Maid of Honour" },
-      { name: "Natali Quickfall", role: "Bridesmaid" },
-      { name: "Gabriella", role: "Bridesmaid" },
-      { name: "Anver", role: "Bridesmaid" },
-      { name: "Tira", role: "Bridesmaid" },
-      { name: "Shawna Pieterse", role: "Sister of the Groom" },
+      {
+        name: "Siobhan Carew",
+        role: "Maid of Honour",
+        img: "/images/bridal-party/Siobhan.jpg",
+      },
+      {
+        name: "Natali Quickfall",
+        role: "Bridesmaid",
+        img: "/images/bridal-party/Natali.jpg",
+      },
+      {
+        name: "Gabriella Mouton",
+        role: "Bridesmaid",
+        img: "/images/bridal-party/Gaby.jpg",
+      },
+      {
+        name: "Anver Victor",
+        role: "Bridesmaid",
+        img: "/images/bridal-party/Anver.jpg",
+      },
+      {
+        name: "Tira Nangolo",
+        role: "Bridesmaid",
+        img: "/images/bridal-party/Tira.jpg",
+      },
+      {
+        name: "Shawna Pieterse",
+        role: "Sister of the Groom",
+        img: "/images/bridal-party/Shawna1.jpg",
+      },
     ],
     color: "var(--wedding-pink)",
   },
   {
     title: "Something Blue Crew",
     members: [
-      { name: "Samantha Pascoe", role: "Something Blue Crew" },
-      { name: "Samantha Mensah", role: "Something Blue Crew" },
-      { name: "Edith Wasserfall", role: "Something Blue Crew" },
-      { name: "Jessica Henn", role: "Something Blue Crew" },
+      {
+        name: "Samantha Pascoe",
+        role: "Something Blue Crew",
+        img: "/images/bridal-party/SamanthaP.jpg",
+      },
+      {
+        name: "Samantha Mensah",
+        role: "Something Blue Crew",
+        img: "/images/bridal-party/SamanthaM.jpg",
+      },
+      {
+        name: "Edith Wasserfall",
+        role: "Something Blue Crew",
+        img: "/images/bridal-party/Edith.jpg",
+      },
+      {
+        name: "Jessica Henn",
+        role: "Something Blue Crew",
+        img: "/images/bridal-party/Jessica.jpg",
+      },
     ],
     color: "#7BA3C7",
   },
@@ -76,7 +142,7 @@ export default function BridalPartySection() {
     <section
       ref={ref}
       className='py-16 sm:py-20 md:py-24 lg:py-32 px-4 sm:px-6 lg:px-8'
-      style={{ backgroundColor: "var(--wedding-light-sage)" }}
+      style={{ backgroundColor: "var(--wedding-dusty-pink)" }}
     >
       <div className='max-w-7xl mx-auto'>
         {/* Section Heading */}
@@ -137,7 +203,14 @@ export default function BridalPartySection() {
                       className='relative aspect-[3/4] flex items-center justify-center'
                       style={{ backgroundColor: group.color, opacity: 0.9 }}
                     >
-                      <User className='w-16 h-16 sm:w-20 sm:h-20 text-white opacity-60' />
+                      <Image
+                        src={member.img}
+                        alt={member.name}
+                        fill
+                        priority
+                        className='object-cover'
+                        quality={70}
+                      />
                     </div>
 
                     {/* Card Content */}
