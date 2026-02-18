@@ -9,6 +9,9 @@ export const metadata = {
   title: "Nicole & Lashca's Wedding | April 1, 2026",
   description:
     "Join us for our South of France inspired wedding at Nibbana Farm, Tulbagh on April 1, 2026",
+  icons: {
+    icon: "/favicon.svg",
+  },
   openGraph: {
     title: "Nicole & Lashca's Wedding",
     description: "Join us for our wedding celebration on April 1, 2026",

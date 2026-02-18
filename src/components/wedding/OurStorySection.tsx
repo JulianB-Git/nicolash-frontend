@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import Image from "next/image";
 
@@ -152,7 +152,7 @@ const storySections: StorySection[] = [
 ];
 
 export default function OurStorySection() {
-  const { ref, inView } = useScrollAnimation();
+  const { ref: headerRef, inView: headerInView } = useScrollAnimation();
 
   const fadeInVariants = {
     hidden: { opacity: 0, y: 50 },
@@ -345,16 +345,16 @@ export default function OurStorySection() {
 
   return (
     <section
-      ref={ref}
       className='py-16 sm:py-20 md:py-24 lg:py-32 px-4 sm:px-6 lg:px-8'
       style={{ backgroundColor: "var(--wedding-cream)" }}
     >
       <div className='max-w-7xl mx-auto'>
         {/* Section Heading */}
         <motion.h2
+          ref={headerRef}
           variants={fadeInVariants}
           initial='hidden'
-          animate={inView ? "visible" : "hidden"}
+          animate={headerInView ? "visible" : "hidden"}
           className='font-playfair text-4xl sm:text-5xl md:text-6xl font-bold text-center mb-4'
           style={{ color: "var(--wedding-dark-grey)" }}
         >
@@ -364,7 +364,7 @@ export default function OurStorySection() {
         <motion.p
           variants={fadeInVariants}
           initial='hidden'
-          animate={inView ? "visible" : "hidden"}
+          animate={headerInView ? "visible" : "hidden"}
           className='font-lato text-lg sm:text-xl text-center mb-16 md:mb-20 italic'
           style={{ color: "var(--wedding-slate)" }}
         >
@@ -374,65 +374,88 @@ export default function OurStorySection() {
         {/* Story Sections */}
         <div className='space-y-20 md:space-y-32'>
           {storySections.map((section, sectionIndex) => (
-            <div
+            <StorySectionItem
               key={sectionIndex}
-              className={`grid md:grid-cols-2 gap-8 md:gap-16 items-center ${
-                section.imagePosition === "left" ? "md:grid-flow-dense" : ""
-              }`}
-            >
-              {/* Text Content */}
-              <motion.div
-                variants={
-                  section.imagePosition === "right" ? slideInLeft : slideInRight
-                }
-                initial='hidden'
-                animate={inView ? "visible" : "hidden"}
-                className={`space-y-6 ${
-                  section.imagePosition === "left"
-                    ? "md:col-start-2"
-                    : "md:col-start-1"
-                }`}
-              >
-                <h3
-                  className='font-playfair text-2xl sm:text-3xl md:text-4xl font-semibold'
-                  style={{ color: "var(--wedding-dark-grey)" }}
-                >
-                  {section.title}
-                </h3>
-
-                {section.paragraphs.map((paragraph, pIndex) => (
-                  <p
-                    key={pIndex}
-                    className='font-lato text-base sm:text-lg md:text-xl leading-relaxed'
-                    style={{ color: "var(--wedding-slate)" }}
-                  >
-                    {paragraph}
-                  </p>
-                ))}
-              </motion.div>
-
-              {/* Card Stack Images */}
-              <motion.div
-                variants={
-                  section.imagePosition === "right" ? slideInRight : slideInLeft
-                }
-                initial='hidden'
-                animate={inView ? "visible" : "hidden"}
-                className={`${
-                  section.imagePosition === "left"
-                    ? "md:col-start-1 md:row-start-1"
-                    : "md:col-start-2"
-                }`}
-              >
-                <CardStack
-                  images={section.images}
-                  stackLayout={section.stackLayout}
-                />
-              </motion.div>
-            </div>
+              section={section}
+              slideInLeft={slideInLeft}
+              slideInRight={slideInRight}
+              CardStack={CardStack}
+            />
           ))}
         </div>
       </div>
     </section>
+  );
+}
+
+// Individual story section component with its own intersection observer
+function StorySectionItem({
+  section,
+  slideInLeft,
+  slideInRight,
+  CardStack,
+}: {
+  section: StorySection;
+  slideInLeft: Variants;
+  slideInRight: Variants;
+  CardStack: React.ComponentType<{
+    images: string[];
+    stackLayout?: "default" | "vertical";
+  }>;
+}) {
+  const { ref, inView } = useScrollAnimation();
+
+  return (
+    <div
+      ref={ref}
+      className={`grid md:grid-cols-2 gap-8 md:gap-16 items-center ${
+        section.imagePosition === "left" ? "md:grid-flow-dense" : ""
+      }`}
+    >
+      {/* Text Content */}
+      <motion.div
+        variants={
+          section.imagePosition === "right" ? slideInLeft : slideInRight
+        }
+        initial='hidden'
+        animate={inView ? "visible" : "hidden"}
+        className={`space-y-6 ${
+          section.imagePosition === "left" ? "md:col-start-2" : "md:col-start-1"
+        }`}
+      >
+        <h3
+          className='font-playfair text-2xl sm:text-3xl md:text-4xl font-semibold'
+          style={{ color: "var(--wedding-dark-grey)" }}
+        >
+          {section.title}
+        </h3>
+
+        {section.paragraphs.map((paragraph, pIndex) => (
+          <p
+            key={pIndex}
+            className='font-lato text-base sm:text-lg md:text-xl leading-relaxed'
+            style={{ color: "var(--wedding-slate)" }}
+          >
+            {paragraph}
+          </p>
+        ))}
+      </motion.div>
+
+      {/* Card Stack Images */}
+      <motion.div
+        variants={
+          section.imagePosition === "right" ? slideInRight : slideInLeft
+        }
+        initial='hidden'
+        animate={inView ? "visible" : "hidden"}
+        className={`${
+          section.imagePosition === "left"
+            ? "md:col-start-1 md:row-start-1"
+            : "md:col-start-2"
+        }`}
+      >
+        <CardStack images={section.images} stackLayout={section.stackLayout} />
+      </motion.div>
+    </div>
   );
 }
