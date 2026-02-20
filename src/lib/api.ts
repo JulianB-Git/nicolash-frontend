@@ -44,7 +44,7 @@ class APIError extends Error {
   constructor(
     message: string,
     public status: number,
-    public response?: unknown
+    public response?: unknown,
   ) {
     super(message);
     this.name = "APIError";
@@ -71,7 +71,7 @@ class AuthorizationError extends APIError {
 async function fetchAPI<T>(
   endpoint: string,
   options: RequestInit = {},
-  token?: string | null
+  token?: string | null,
 ): Promise<T> {
   const url = `${API_BASE_URL}${endpoint}`;
   const method = options.method || "GET";
@@ -102,7 +102,7 @@ async function fetchAPI<T>(
 
     if (response.status === 403) {
       const error = new AuthorizationError(
-        "Access denied - user not on allowlist"
+        "Access denied - user not on allowlist",
       );
       logApiError(error, endpoint, method, response.status);
       throw error;
@@ -137,7 +137,7 @@ class AuthenticatedAPIClient {
     const response = await fetchAPI<any>(
       `/attendees?page=${page}&limit=${limit}`,
       {},
-      token
+      token,
     );
 
     // Handle the API response format: { success: true, data: { attendees: [...], total: 7, ... } }
@@ -162,7 +162,7 @@ class AuthenticatedAPIClient {
         method: "POST",
         body: JSON.stringify(data),
       },
-      token
+      token,
     );
 
     // Handle the API response format: { success: true, data: { ...attendeeData } }
@@ -175,7 +175,7 @@ class AuthenticatedAPIClient {
 
   async updateAttendee(
     id: string,
-    data: UpdateAttendeeRequest
+    data: UpdateAttendeeRequest,
   ): Promise<Attendee> {
     const token = await this.getToken();
     const response = await fetchAPI<any>(
@@ -184,7 +184,7 @@ class AuthenticatedAPIClient {
         method: "PUT",
         body: JSON.stringify(data),
       },
-      token
+      token,
     );
 
     // Handle the API response format: { success: true, data: { ...attendeeData } }
@@ -202,7 +202,7 @@ class AuthenticatedAPIClient {
       {
         method: "DELETE",
       },
-      token
+      token,
     );
   }
 
@@ -220,7 +220,7 @@ class AuthenticatedAPIClient {
         method: "POST",
         body: JSON.stringify(data),
       },
-      token
+      token,
     );
   }
 
@@ -259,7 +259,7 @@ class AuthenticatedAPIClient {
         method: "PUT",
         body: JSON.stringify({ attendeeIds: memberIds }),
       },
-      token
+      token,
     );
   }
 
@@ -274,7 +274,7 @@ class AuthenticatedAPIClient {
           action: "add",
         }),
       },
-      token
+      token,
     );
   }
 
@@ -289,7 +289,7 @@ class AuthenticatedAPIClient {
           action: "remove",
         }),
       },
-      token
+      token,
     );
   }
 
@@ -300,7 +300,7 @@ class AuthenticatedAPIClient {
       {
         method: "DELETE",
       },
-      token
+      token,
     );
   }
 
@@ -365,7 +365,7 @@ export const publicApiClient = {
     if (response && response.data && Array.isArray(response.data.attendees)) {
       console.log(
         "Using response.data.attendees format, length:",
-        response.data.attendees.length
+        response.data.attendees.length,
       );
       return response.data.attendees;
     } else if (response && response.data && Array.isArray(response.data)) {
@@ -380,16 +380,23 @@ export const publicApiClient = {
     }
   },
 
-  async submitRSVP(id: string, status: RSVPStatus): Promise<void> {
+  async submitRSVP(
+    id: string,
+    status: RSVPStatus,
+    dietaryRequirements?: string,
+  ): Promise<void> {
     return fetchAPI<void>(`/rsvp/${id}/respond`, {
       method: "POST",
-      body: JSON.stringify({ rsvpStatus: status }),
+      body: JSON.stringify({
+        rsvpStatus: status,
+        ...(dietaryRequirements && { dietaryRequirements }),
+      }),
     });
   },
 
   async submitGroupRSVP(
     groupId: string,
-    responses: GroupRSVPRequest
+    responses: GroupRSVPRequest,
   ): Promise<void> {
     return fetchAPI<void>(`/rsvp/group/${groupId}/respond`, {
       method: "POST",
@@ -422,47 +429,47 @@ export const apiClient = {
   // These will throw errors if used without proper authentication setup
   async getAttendees(): Promise<AttendeesResponse> {
     throw new AuthenticationError(
-      "Admin operations require authentication. Use AuthenticatedAPIClient instead."
+      "Admin operations require authentication. Use AuthenticatedAPIClient instead.",
     );
   },
   async createAttendee(): Promise<Attendee> {
     throw new AuthenticationError(
-      "Admin operations require authentication. Use AuthenticatedAPIClient instead."
+      "Admin operations require authentication. Use AuthenticatedAPIClient instead.",
     );
   },
   async updateAttendee(): Promise<Attendee> {
     throw new AuthenticationError(
-      "Admin operations require authentication. Use AuthenticatedAPIClient instead."
+      "Admin operations require authentication. Use AuthenticatedAPIClient instead.",
     );
   },
   async deleteAttendee(): Promise<void> {
     throw new AuthenticationError(
-      "Admin operations require authentication. Use AuthenticatedAPIClient instead."
+      "Admin operations require authentication. Use AuthenticatedAPIClient instead.",
     );
   },
   async getAttendee(): Promise<Attendee> {
     throw new AuthenticationError(
-      "Admin operations require authentication. Use AuthenticatedAPIClient instead."
+      "Admin operations require authentication. Use AuthenticatedAPIClient instead.",
     );
   },
   async createGroup(): Promise<GroupWithMembers> {
     throw new AuthenticationError(
-      "Admin operations require authentication. Use AuthenticatedAPIClient instead."
+      "Admin operations require authentication. Use AuthenticatedAPIClient instead.",
     );
   },
   async getGroup(): Promise<GroupWithMembers> {
     throw new AuthenticationError(
-      "Admin operations require authentication. Use AuthenticatedAPIClient instead."
+      "Admin operations require authentication. Use AuthenticatedAPIClient instead.",
     );
   },
   async updateGroupMembers(): Promise<void> {
     throw new AuthenticationError(
-      "Admin operations require authentication. Use AuthenticatedAPIClient instead."
+      "Admin operations require authentication. Use AuthenticatedAPIClient instead.",
     );
   },
   async bulkUploadAttendees(): Promise<BulkUploadResult> {
     throw new AuthenticationError(
-      "Admin operations require authentication. Use AuthenticatedAPIClient instead."
+      "Admin operations require authentication. Use AuthenticatedAPIClient instead.",
     );
   },
 };

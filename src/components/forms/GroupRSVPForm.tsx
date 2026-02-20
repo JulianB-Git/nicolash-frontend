@@ -3,11 +3,17 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Form,
   FormControl,
@@ -19,18 +25,7 @@ import {
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { publicApiClient } from "@/lib/api";
 import { Attendee, GroupWithMembers, GroupRSVPRequest } from "@/types";
-
-// Schema for group RSVP form
-const GroupRSVPSchema = z.object({
-  responses: z.record(
-    z.string(),
-    z.enum(["accepted", "declined"], {
-      message: "Please select an RSVP status for each member",
-    })
-  ),
-});
-
-type GroupRSVPFormData = z.infer<typeof GroupRSVPSchema>;
+import { GroupRSVPSchema, type GroupRSVPFormData } from "@/lib/validations";
 
 interface GroupRSVPFormProps {
   attendee: Attendee; // The attendee who initiated the group RSVP
@@ -70,22 +65,31 @@ export default function GroupRSVPForm({
 
         setGroup(groupData);
 
-        // Set default values based on current RSVP statuses
-        const defaultResponses: Record<string, "accepted" | "declined"> = {};
-        groupData.members.forEach((member) => {
-          if (
-            member.rsvpStatus === "accepted" ||
-            member.rsvpStatus === "declined"
-          ) {
-            defaultResponses[member.id] = member.rsvpStatus;
+        // Set default values based on current RSVP statuses and dietary requirements
+        const defaultResponses: Record<
+          string,
+          {
+            status?: "accepted" | "declined";
+            dietaryRequirements?: "Vegan" | "Vegetarian" | "Other" | "None";
           }
+        > = {};
+        groupData.members.forEach((member) => {
+          // Initialize all members with their current values or defaults
+          defaultResponses[member.id] = {
+            status:
+              member.rsvpStatus === "accepted" ||
+              member.rsvpStatus === "declined"
+                ? member.rsvpStatus
+                : undefined,
+            dietaryRequirements: member.dietaryRequirements || "None",
+          };
         });
         form.reset({ responses: defaultResponses });
       } catch (err) {
         setError(
           err instanceof Error
             ? err.message
-            : "Failed to load group information"
+            : "Failed to load group information",
         );
       } finally {
         setIsLoading(false);
@@ -98,6 +102,8 @@ export default function GroupRSVPForm({
   const onSubmit = async (data: GroupRSVPFormData) => {
     if (!group) return;
 
+    console.log("Form data being submitted:", data);
+
     setIsSubmitting(true);
     setError(null);
 
@@ -105,10 +111,11 @@ export default function GroupRSVPForm({
       // Convert form data to API format - backend expects rsvpStatus, not status
       const groupRSVPRequest: GroupRSVPRequest = {
         responses: Object.entries(data.responses).map(
-          ([attendeeId, status]) => ({
+          ([attendeeId, responseData]) => ({
             attendeeId,
-            rsvpStatus: status, // Backend expects rsvpStatus
-          })
+            rsvpStatus: responseData.status, // Backend expects rsvpStatus
+            dietaryRequirements: responseData.dietaryRequirements || "None",
+          }),
         ),
       };
 
@@ -120,7 +127,11 @@ export default function GroupRSVPForm({
         ...group,
         members: group.members.map((member) => ({
           ...member,
-          rsvpStatus: data.responses[member.id] || member.rsvpStatus,
+          rsvpStatus: data.responses[member.id]?.status || member.rsvpStatus,
+          dietaryRequirements:
+            data.responses[member.id]?.dietaryRequirements ||
+            member.dietaryRequirements ||
+            "None",
           updatedAt: new Date().toISOString(),
         })),
       };
@@ -129,7 +140,7 @@ export default function GroupRSVPForm({
       onSuccess(updatedGroup);
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : "Failed to submit group RSVP"
+        err instanceof Error ? err.message : "Failed to submit group RSVP",
       );
     } finally {
       setIsSubmitting(false);
@@ -194,10 +205,10 @@ export default function GroupRSVPForm({
   if (isSubmitted) {
     const responses = form.getValues("responses");
     const acceptedCount = Object.values(responses).filter(
-      (status) => status === "accepted"
+      (response) => response.status === "accepted",
     ).length;
     const declinedCount = Object.values(responses).filter(
-      (status) => status === "declined"
+      (response) => response.status === "declined",
     ).length;
 
     return (
@@ -272,7 +283,13 @@ export default function GroupRSVPForm({
       </div>
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+        <form
+          onSubmit={form.handleSubmit(onSubmit, (errors) => {
+            console.log("Form validation errors:", errors);
+            setError("Please select an RSVP status for all members");
+          })}
+          className='space-y-8'
+        >
           <div className='space-y-6'>
             {group.members.map((member) => (
               <div
@@ -298,7 +315,7 @@ export default function GroupRSVPForm({
 
                 <FormField
                   control={form.control}
-                  name={`responses.${member.id}`}
+                  name={`responses.${member.id}.status`}
                   render={({ field }) => (
                     <FormItem className='space-y-4'>
                       <FormLabel className='text-stone-700 font-light text-center block'>
@@ -341,6 +358,48 @@ export default function GroupRSVPForm({
                             </Label>
                           </div>
                         </RadioGroup>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name={`responses.${member.id}.dietaryRequirements`}
+                  render={({ field }) => (
+                    <FormItem className='space-y-4'>
+                      <FormLabel className='text-stone-700 font-light text-center block'>
+                        Dietary requirements for {member.firstName}?
+                      </FormLabel>
+                      <FormControl>
+                        <Select
+                          onValueChange={field.onChange}
+                          value={field.value || "None"}
+                          disabled={isSubmitting}
+                        >
+                          <SelectTrigger className='w-full h-12 px-4 text-center text-base font-light bg-white border-stone-200 rounded-lg shadow-sm focus:border-stone-400 focus:ring-stone-400/20'>
+                            <SelectValue placeholder='Select dietary requirements' />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value='None'>
+                              <span className='font-light'>
+                                No dietary requirements
+                              </span>
+                            </SelectItem>
+                            <SelectItem value='Vegan'>
+                              <span className='font-light'>Vegan 🌱</span>
+                            </SelectItem>
+                            <SelectItem value='Vegetarian'>
+                              <span className='font-light'>Vegetarian 🥗</span>
+                            </SelectItem>
+                            <SelectItem value='Other'>
+                              <span className='font-light'>
+                                Other dietary needs
+                              </span>
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
                       </FormControl>
                       <FormMessage />
                     </FormItem>

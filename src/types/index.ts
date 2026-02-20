@@ -4,10 +4,13 @@ export interface Attendee {
   lastName: string;
   email?: string; // Made optional
   rsvpStatus: "pending" | "accepted" | "declined";
+  dietaryRequirements?: "Vegan" | "Vegetarian" | "Other" | "None";
   groupId?: string;
   createdAt: string;
   updatedAt: string;
 }
+
+export type DietaryRequirement = "Vegan" | "Vegetarian" | "Other" | "None";
 
 export interface Group {
   id: string;
@@ -46,6 +49,7 @@ export interface CreateAttendeeRequest {
   firstName: string;
   lastName: string;
   email?: string; // Made optional
+  dietaryRequirements?: DietaryRequirement;
   groupId?: string;
 }
 
@@ -53,6 +57,7 @@ export interface UpdateAttendeeRequest {
   firstName?: string;
   lastName?: string;
   email?: string; // Already optional, but confirming it stays optional
+  dietaryRequirements?: DietaryRequirement;
   groupId?: string;
 }
 
@@ -60,6 +65,7 @@ export interface GroupRSVPRequest {
   responses: Array<{
     attendeeId: string;
     rsvpStatus: "accepted" | "declined"; // Backend expects rsvpStatus, not status
+    dietaryRequirements?: DietaryRequirement;
   }>;
 }
 

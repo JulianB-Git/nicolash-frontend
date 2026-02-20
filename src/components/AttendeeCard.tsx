@@ -54,15 +54,24 @@ export default function AttendeeCard({
   };
 
   return (
-    <Card>
+    <Card
+      className='border-2'
+      style={{
+        borderColor: "var(--wedding-light-sage)",
+        backgroundColor: "white",
+      }}
+    >
       <CardHeader>
         <CardTitle className='flex justify-between items-center'>
-          <span>
+          <span
+            className='font-playfair text-2xl'
+            style={{ color: "var(--wedding-dark-grey)" }}
+          >
             {attendee.firstName} {attendee.lastName}
           </span>
           <span
             className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getStatusColor(
-              attendee.rsvpStatus
+              attendee.rsvpStatus,
             )}`}
           >
             {getStatusText(attendee.rsvpStatus)}
@@ -74,6 +83,16 @@ export default function AttendeeCard({
           <p className='text-sm text-muted-foreground'>Email</p>
           <p className='font-medium'>{attendee.email}</p>
         </div>
+
+        {attendee.dietaryRequirements &&
+          attendee.dietaryRequirements !== "None" && (
+            <div>
+              <p className='text-sm text-muted-foreground'>
+                Dietary Requirements
+              </p>
+              <p className='font-medium'>{attendee.dietaryRequirements}</p>
+            </div>
+          )}
 
         {attendee.rsvpStatus !== "pending" && (
           <div>

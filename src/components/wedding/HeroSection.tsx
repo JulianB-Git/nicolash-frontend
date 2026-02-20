@@ -18,6 +18,41 @@ export default function HeroSection() {
       className='relative min-h-screen w-full overflow-hidden flex items-center justify-center py-12 md:py-20'
       style={{ backgroundColor: "var(--wedding-sage)" }}
     >
+      {/* Decorative Corner Borders */}
+      <div className='absolute inset-0 pointer-events-none z-20'>
+        {/* Top Left Corner */}
+        <div className='absolute top-4 left-4 md:top-8 md:left-8 w-12 h-12 md:w-16 md:h-16'>
+          <div className='absolute top-0 left-0 w-full h-0.5 bg-white/40'></div>
+          <div className='absolute top-0 left-0 w-0.5 h-full bg-white/40'></div>
+          <div className='absolute top-2 left-2 w-6 h-0.5 bg-white/20 md:w-8'></div>
+          <div className='absolute top-2 left-2 w-0.5 h-6 bg-white/20 md:h-8'></div>
+        </div>
+
+        {/* Top Right Corner */}
+        <div className='absolute top-4 right-4 md:top-8 md:right-8 w-12 h-12 md:w-16 md:h-16'>
+          <div className='absolute top-0 right-0 w-full h-0.5 bg-white/40'></div>
+          <div className='absolute top-0 right-0 w-0.5 h-full bg-white/40'></div>
+          <div className='absolute top-2 right-2 w-6 h-0.5 bg-white/20 md:w-8'></div>
+          <div className='absolute top-2 right-2 w-0.5 h-6 bg-white/20 md:h-8'></div>
+        </div>
+
+        {/* Bottom Left Corner */}
+        <div className='absolute bottom-4 left-4 md:bottom-8 md:left-8 w-12 h-12 md:w-16 md:h-16'>
+          <div className='absolute bottom-0 left-0 w-full h-0.5 bg-white/40'></div>
+          <div className='absolute bottom-0 left-0 w-0.5 h-full bg-white/40'></div>
+          <div className='absolute bottom-2 left-2 w-6 h-0.5 bg-white/20 md:w-8'></div>
+          <div className='absolute bottom-2 left-2 w-0.5 h-6 bg-white/20 md:h-8'></div>
+        </div>
+
+        {/* Bottom Right Corner */}
+        <div className='absolute bottom-4 right-4 md:bottom-8 md:right-8 w-12 h-12 md:w-16 md:h-16'>
+          <div className='absolute bottom-0 right-0 w-full h-0.5 bg-white/40'></div>
+          <div className='absolute bottom-0 right-0 w-0.5 h-full bg-white/40'></div>
+          <div className='absolute bottom-2 right-2 w-6 h-0.5 bg-white/20 md:w-8'></div>
+          <div className='absolute bottom-2 right-2 w-0.5 h-6 bg-white/20 md:h-8'></div>
+        </div>
+      </div>
+
       {/* Content */}
       <div className='relative z-10 flex flex-col items-center justify-center h-full px-4 text-center text-white'>
         <motion.div

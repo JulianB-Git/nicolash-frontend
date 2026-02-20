@@ -7,6 +7,13 @@ import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   Form,
   FormControl,
   FormField,
@@ -44,6 +51,7 @@ export default function RSVPForm({
     defaultValues: {
       status:
         attendee.rsvpStatus !== "pending" ? attendee.rsvpStatus : undefined,
+      dietaryRequirements: attendee.dietaryRequirements || "None",
     },
   });
 
@@ -52,12 +60,17 @@ export default function RSVPForm({
     setError(null);
 
     try {
-      await publicApiClient.submitRSVP(attendee.id, data.status);
+      await publicApiClient.submitRSVP(
+        attendee.id,
+        data.status,
+        data.dietaryRequirements,
+      );
 
       // Create updated attendee object for confirmation
       const updatedAttendee: Attendee = {
         ...attendee,
         rsvpStatus: data.status,
+        dietaryRequirements: data.dietaryRequirements || "None",
         updatedAt: new Date().toISOString(),
       };
 
@@ -107,6 +120,15 @@ export default function RSVPForm({
                 {status === "accepted" ? "Accepted" : "Declined"}
               </span>
             </p>
+            {form.getValues("dietaryRequirements") &&
+              form.getValues("dietaryRequirements") !== "None" && (
+                <p className='text-stone-500 font-light'>
+                  Dietary Requirements:{" "}
+                  <span className='font-medium'>
+                    {form.getValues("dietaryRequirements")}
+                  </span>
+                </p>
+              )}
             <p className='text-xs text-stone-400 font-light'>
               Updated:{" "}
               {new Date().toLocaleDateString("en-US", {
@@ -211,6 +233,46 @@ export default function RSVPForm({
                       </div>
                     </div>
                   </RadioGroup>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name='dietaryRequirements'
+            render={({ field }) => (
+              <FormItem className='space-y-4'>
+                <FormLabel className='text-lg font-light text-stone-700 text-center block'>
+                  Do you have any dietary requirements?
+                </FormLabel>
+                <FormControl>
+                  <Select
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    disabled={isSubmitting}
+                  >
+                    <SelectTrigger className='w-full h-14 px-6 text-center text-base font-light bg-white/80 border-stone-200 rounded-full shadow-sm focus:border-stone-400 focus:ring-stone-400/20'>
+                      <SelectValue placeholder='Select dietary requirements' />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value='None'>
+                        <span className='font-light'>
+                          No dietary requirements
+                        </span>
+                      </SelectItem>
+                      <SelectItem value='Vegan'>
+                        <span className='font-light'>Vegan 🌱</span>
+                      </SelectItem>
+                      <SelectItem value='Vegetarian'>
+                        <span className='font-light'>Vegetarian 🥗</span>
+                      </SelectItem>
+                      <SelectItem value='Other'>
+                        <span className='font-light'>Other dietary needs</span>
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
                 </FormControl>
                 <FormMessage />
               </FormItem>

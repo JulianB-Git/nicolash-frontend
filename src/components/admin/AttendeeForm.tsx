@@ -94,6 +94,7 @@ export default function AttendeeForm({
           firstName: attendee.firstName,
           lastName: attendee.lastName,
           email: attendee.email,
+          dietaryRequirements: attendee.dietaryRequirements || "None",
           groupId: attendee.groupId || "none",
         });
       } else {
@@ -101,6 +102,7 @@ export default function AttendeeForm({
           firstName: "",
           lastName: "",
           email: "",
+          dietaryRequirements: "None",
           groupId: "none",
         });
       }
@@ -128,13 +130,14 @@ export default function AttendeeForm({
           firstName: data.firstName,
           lastName: data.lastName,
           email: data.email || undefined, // Convert empty string to undefined
+          dietaryRequirements: data.dietaryRequirements || "None",
           groupId: data.groupId === "none" ? "" : data.groupId,
         });
         console.log("Update attendee API response:", result);
         adminToasts.attendeeUpdated(
           `${result?.firstName || data.firstName} ${
             result?.lastName || data.lastName
-          }`
+          }`,
         );
       } else {
         // Create new attendee
@@ -142,13 +145,14 @@ export default function AttendeeForm({
           firstName: data.firstName,
           lastName: data.lastName,
           email: data.email || undefined, // Convert empty string to undefined
+          dietaryRequirements: data.dietaryRequirements || "None",
           groupId: data.groupId === "none" ? undefined : data.groupId,
         });
         console.log("Create attendee API response:", result);
         adminToasts.attendeeCreated(
           `${result?.firstName || data.firstName} ${
             result?.lastName || data.lastName
-          }`
+          }`,
         );
       }
 
@@ -254,6 +258,36 @@ export default function AttendeeForm({
                       disabled={isSubmitting}
                     />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name='dietaryRequirements'
+              render={({ field }) => (
+                <FormItem className='min-h-[80px]'>
+                  <FormLabel>Dietary Requirements</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    disabled={isSubmitting}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder='Select dietary requirements' />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value='None'>
+                        No dietary requirements
+                      </SelectItem>
+                      <SelectItem value='Vegan'>Vegan</SelectItem>
+                      <SelectItem value='Vegetarian'>Vegetarian</SelectItem>
+                      <SelectItem value='Other'>Other</SelectItem>
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}

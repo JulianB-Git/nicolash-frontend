@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { Calendar, Clock, MapPin } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function EventDetailsSection() {
   const { ref, inView } = useScrollAnimation();
@@ -15,35 +16,6 @@ export default function EventDetailsSection() {
       transition: { duration: 0.6, ease: "easeOut" as const },
     },
   };
-
-  const staggerChildren = {
-    visible: {
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
-  const events = [
-    {
-      icon: Calendar,
-      title: "Ceremony",
-      time: "14:30",
-      description: "Join us as we exchange our vows",
-    },
-    {
-      icon: Clock,
-      title: "Cocktail Hour",
-      time: "15:30",
-      description: "Celebrate with drinks and canapés",
-    },
-    {
-      icon: MapPin,
-      title: "Reception",
-      time: "17:00",
-      description: "Dinner, dancing, and celebration",
-    },
-  ];
 
   return (
     <section
@@ -67,90 +39,119 @@ export default function EventDetailsSection() {
           variants={fadeInVariants}
           initial='hidden'
           animate={inView ? "visible" : "hidden"}
-          className='font-lato text-lg sm:text-xl text-center mb-12 md:mb-16'
+          className='font-lato text-lg sm:text-xl text-center'
           style={{ color: "var(--wedding-slate)" }}
         >
           1 April 2026 @ Nibbana Farm
         </motion.p>
 
-        {/* Timeline */}
-        <motion.div
-          variants={staggerChildren}
-          initial='hidden'
-          animate={inView ? "visible" : "hidden"}
-          className='grid sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12'
-        >
-          {events.map((event, index) => {
-            const Icon = event.icon;
-            return (
-              <motion.div
-                key={event.title}
-                variants={fadeInVariants}
-                className='flex flex-col items-center text-center group'
+        {/* Timeline and RSVP Card - Side by side on desktop */}
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-12'>
+          {/* Timeline Image */}
+          <motion.div
+            variants={fadeInVariants}
+            initial='hidden'
+            animate={inView ? "visible" : "hidden"}
+            className='flex items-start justify-center'
+          >
+            <div className='relative w-full max-w-lg'>
+              <Image
+                src='/wedding-timeline.png'
+                alt='Wedding Program Timeline'
+                width={900}
+                height={1300}
+                className='w-full h-auto'
+                priority
+                quality={90}
+              />
+            </div>
+          </motion.div>
+
+          {/* RSVP Card - Redesigned to match the vibe */}
+          <motion.div
+            variants={fadeInVariants}
+            initial='hidden'
+            animate={inView ? "visible" : "hidden"}
+            className='flex items-center justify-center'
+          >
+            <div className='w-full max-w-lg relative'>
+              {/* Soft background with subtle border */}
+              <div
+                className='p-10 md:p-14 rounded-3xl relative overflow-hidden border-2'
+                style={{
+                  backgroundColor: "rgba(255, 255, 255, 0.6)",
+                  borderColor: "var(--wedding-sage)",
+                  backdropFilter: "blur(10px)",
+                }}
               >
-                {/* Icon */}
-                <motion.div
-                  whileHover={{ scale: 1.1 }}
-                  className='w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center mb-4 shadow-lg transition-shadow group-hover:shadow-xl'
-                  style={{ backgroundColor: "var(--wedding-sage)" }}
-                >
-                  <Icon className='w-10 h-10 sm:w-12 sm:h-12 text-white' />
-                </motion.div>
+                {/* Decorative corner flourishes */}
+                <div
+                  className='absolute top-4 left-4 w-12 h-12 border-t-2 border-l-2 opacity-20'
+                  style={{ borderColor: "var(--wedding-sage)" }}
+                />
+                <div
+                  className='absolute top-4 right-4 w-12 h-12 border-t-2 border-r-2 opacity-20'
+                  style={{ borderColor: "var(--wedding-sage)" }}
+                />
+                <div
+                  className='absolute bottom-4 left-4 w-12 h-12 border-b-2 border-l-2 opacity-20'
+                  style={{ borderColor: "var(--wedding-sage)" }}
+                />
+                <div
+                  className='absolute bottom-4 right-4 w-12 h-12 border-b-2 border-r-2 opacity-20'
+                  style={{ borderColor: "var(--wedding-sage)" }}
+                />
 
-                {/* Title */}
-                <h3
-                  className='font-playfair text-2xl sm:text-3xl font-semibold mb-2'
-                  style={{ color: "var(--wedding-dark-grey)" }}
-                >
-                  {event.title}
-                </h3>
+                <div className='relative flex flex-col items-center text-center gap-6'>
+                  {/* Envelope Image - larger with left tilt */}
+                  <motion.div
+                    whileHover={{ scale: 1.05, rotate: -3 }}
+                    className='relative w-56 h-56 md:w-76 md:h-76 flex-shrink-0 transition-all duration-300 -rotate-6'
+                  >
+                    <Image
+                      src='/envelope.png'
+                      alt='Wedding Invitation Envelope'
+                      fill
+                      className='object-contain drop-shadow-lg'
+                      priority
+                    />
+                  </motion.div>
 
-                {/* Time */}
-                <p
-                  className='font-lato text-xl sm:text-2xl font-medium mb-2'
-                  style={{ color: "var(--wedding-sage)" }}
-                >
-                  {event.time}
-                </p>
+                  {/* RSVP Content */}
+                  <div className='space-y-4'>
+                    <p
+                      className='font-lato text-base sm:text-lg max-w-md mx-auto leading-relaxed'
+                      style={{ color: "var(--wedding-slate)" }}
+                    >
+                      We would be honored by your presence on our special day.
+                      Please let us know if you can make it!
+                    </p>
 
-                {/* Description */}
-                <p
-                  className='font-lato text-base sm:text-lg'
-                  style={{ color: "var(--wedding-slate)" }}
-                >
-                  {event.description}
-                </p>
-              </motion.div>
-            );
-          })}
-        </motion.div>
+                    <Link href='/rsvp'>
+                      <motion.button
+                        whileHover={{ scale: 1.05, y: -2 }}
+                        whileTap={{ scale: 0.98 }}
+                        className='font-playfair italic mt-4 px-12 py-4 rounded-full text-white text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300'
+                        style={{
+                          backgroundColor: "var(--wedding-sage)",
+                        }}
+                      >
+                        RSVP Now
+                      </motion.button>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
 
-        {/* Venue Information */}
-        {/* <motion.div
-          variants={fadeInVariants}
-          initial='hidden'
-          animate={inView ? "visible" : "hidden"}
-          className='mt-16 p-8 rounded-lg shadow-lg text-center'
-          style={{ backgroundColor: "white" }}
-        >
-          <h3
-            className='font-playfair text-2xl sm:text-3xl font-semibold mb-4'
-            style={{ color: "var(--wedding-dark-grey)" }}
-          >
-            Nibbana Farm
-          </h3>
-          <p
-            className='font-lato text-lg sm:text-xl'
-            style={{ color: "var(--wedding-slate)" }}
-          >
-            Tulbagh/Wolseley, South Africa
-          </p>
-        </motion.div> */}
+        {/* Share your love section - Below both */}
         <motion.div
           variants={fadeInVariants}
           initial='hidden'
           animate={inView ? "visible" : "hidden"}
-          className='mt-12 p-8 rounded-lg shadow-lg text-center'
+          className='p-8 rounded-lg shadow-lg text-center'
           style={{ backgroundColor: "var(--wedding-light-grey)" }}
         >
           <p

@@ -42,7 +42,7 @@ export default function AttendeeList({ className }: AttendeeListProps) {
   // Form and dialog states
   const [showAttendeeForm, setShowAttendeeForm] = useState(false);
   const [editingAttendee, setEditingAttendee] = useState<Attendee | undefined>(
-    undefined
+    undefined,
   );
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [deletingAttendee, setDeletingAttendee] = useState<
@@ -73,7 +73,7 @@ export default function AttendeeList({ className }: AttendeeListProps) {
         setLoading(false);
       }
     },
-    [api]
+    [api],
   );
 
   useEffect(() => {
@@ -144,7 +144,7 @@ export default function AttendeeList({ className }: AttendeeListProps) {
       await fetchAttendees(currentPage, pageSize);
 
       adminToasts.attendeeDeleted(
-        `${deletingAttendee.firstName} ${deletingAttendee.lastName}`
+        `${deletingAttendee.firstName} ${deletingAttendee.lastName}`,
       );
       setShowDeleteDialog(false);
       setDeletingAttendee(undefined);
@@ -250,6 +250,7 @@ export default function AttendeeList({ className }: AttendeeListProps) {
                   <TableHead>Name</TableHead>
                   <TableHead>Email</TableHead>
                   <TableHead>Status</TableHead>
+                  <TableHead>Dietary</TableHead>
                   <TableHead>Group</TableHead>
                   <TableHead>Created</TableHead>
                   <TableHead className='text-right'>Actions</TableHead>
@@ -269,6 +270,11 @@ export default function AttendeeList({ className }: AttendeeListProps) {
                         {attendee.rsvpStatus.charAt(0).toUpperCase() +
                           attendee.rsvpStatus.slice(1)}
                       </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <span className='text-sm text-muted-foreground'>
+                        {attendee.dietaryRequirements || "None"}
+                      </span>
                     </TableCell>
                     <TableCell>
                       {attendee.groupId ? (

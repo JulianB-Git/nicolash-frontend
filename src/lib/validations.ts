@@ -9,7 +9,7 @@ export const AttendeeSchema = z.object({
     .max(50, "First name must be less than 50 characters")
     .regex(
       /^[a-zA-Z\s'-]+$/,
-      "First name can only contain letters, spaces, hyphens, and apostrophes"
+      "First name can only contain letters, spaces, hyphens, and apostrophes",
     )
     .transform((val) => val.trim()),
   lastName: z
@@ -18,7 +18,7 @@ export const AttendeeSchema = z.object({
     .max(50, "Last name must be less than 50 characters")
     .regex(
       /^[a-zA-Z\s'-]+$/,
-      "Last name can only contain letters, spaces, hyphens, and apostrophes"
+      "Last name can only contain letters, spaces, hyphens, and apostrophes",
     )
     .transform((val) => val.trim()),
   email: z
@@ -32,6 +32,10 @@ export const AttendeeSchema = z.object({
       }
       return true;
     }, "Please enter a valid email address"),
+  dietaryRequirements: z
+    .enum(["Vegan", "Vegetarian", "Other", "None"])
+    .optional()
+    .default("None"),
   groupId: z.string().optional(),
 });
 
@@ -42,7 +46,7 @@ export const RSVPSearchSchema = z.object({
     .max(100, "Search term is too long")
     .regex(
       /^[a-zA-Z\s'-]+$/,
-      "Search can only contain letters, spaces, hyphens, and apostrophes"
+      "Search can only contain letters, spaces, hyphens, and apostrophes",
     )
     .transform((val) => val.trim()),
 });
@@ -51,6 +55,10 @@ export const RSVPSubmissionSchema = z.object({
   status: z.enum(["accepted", "declined"], {
     message: "Please select your RSVP status",
   }),
+  dietaryRequirements: z
+    .enum(["Vegan", "Vegetarian", "Other", "None"])
+    .optional()
+    .default("None"),
 });
 
 export const GroupSchema = z.object({
@@ -60,7 +68,7 @@ export const GroupSchema = z.object({
     .max(100, "Group name must be less than 100 characters")
     .regex(
       /^[a-zA-Z0-9\s'&.-]+$/,
-      "Group name can only contain letters, numbers, spaces, and common punctuation"
+      "Group name can only contain letters, numbers, spaces, and common punctuation",
     )
     .transform((val) => val.trim()),
   memberIds: z.array(z.string()).optional(),
@@ -72,11 +80,11 @@ export const BulkUploadSchema = z.object({
     .refine((file) => file.size > 0, "Please select a file")
     .refine(
       (file) => file.size <= 50 * 1024 * 1024,
-      "File size must be less than 50MB"
+      "File size must be less than 50MB",
     )
     .refine(
       (file) => file.type === "text/csv" || file.name.endsWith(".csv"),
-      "File must be a CSV file (.csv extension required)"
+      "File must be a CSV file (.csv extension required)",
     )
     .refine((file) => {
       // Estimate max records based on average row size (assuming ~100 bytes per row)
@@ -88,14 +96,18 @@ export const BulkUploadSchema = z.object({
 // Additional validation schemas for enhanced form validation
 
 export const GroupRSVPSchema = z.object({
-  responses: z
-    .array(
-      z.object({
-        attendeeId: z.string(),
-        status: z.enum(["accepted", "declined"]),
-      })
-    )
-    .min(1, "Please select RSVP status for at least one member"),
+  responses: z.record(
+    z.string(),
+    z.object({
+      status: z.enum(["accepted", "declined"], {
+        message: "Please select an RSVP status for each member",
+      }),
+      dietaryRequirements: z
+        .enum(["Vegan", "Vegetarian", "Other", "None"])
+        .optional()
+        .default("None"),
+    }),
+  ),
 });
 
 // Real-time validation helpers
