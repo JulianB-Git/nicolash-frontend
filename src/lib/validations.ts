@@ -34,8 +34,7 @@ export const AttendeeSchema = z.object({
     }, "Please enter a valid email address"),
   dietaryRequirements: z
     .enum(["Vegan", "Vegetarian", "Other", "None"])
-    .optional()
-    .default("None"),
+    .catch("None"),
   groupId: z.string().optional(),
 });
 
@@ -57,8 +56,7 @@ export const RSVPSubmissionSchema = z.object({
   }),
   dietaryRequirements: z
     .enum(["Vegan", "Vegetarian", "Other", "None"])
-    .optional()
-    .default("None"),
+    .catch("None"),
 });
 
 export const GroupSchema = z.object({
@@ -104,8 +102,7 @@ export const GroupRSVPSchema = z.object({
       }),
       dietaryRequirements: z
         .enum(["Vegan", "Vegetarian", "Other", "None"])
-        .optional()
-        .default("None"),
+        .catch("None"),
     }),
   ),
 });
