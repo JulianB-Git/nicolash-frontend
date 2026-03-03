@@ -9,7 +9,6 @@ const nextConfig: NextConfig = {
     optimizeCss: true,
     optimizePackageImports: [
       "@radix-ui/react-icons",
-      "lucide-react",
       "@clerk/nextjs",
     ],
   },
@@ -39,7 +38,7 @@ const nextConfig: NextConfig = {
 
   // Headers for caching and security
   async headers() {
-    return [
+    const headers = [
       {
         source: "/(.*)",
         headers: [
@@ -66,7 +65,10 @@ const nextConfig: NextConfig = {
           },
         ],
       },
-      {
+    ];
+
+    if (process.env.NODE_ENV === "production") {
+      headers.push({
         source: "/_next/static/(.*)",
         headers: [
           {
@@ -74,8 +76,10 @@ const nextConfig: NextConfig = {
             value: "public, max-age=31536000, immutable",
           },
         ],
-      },
-    ];
+      });
+    }
+
+    return headers;
   },
 };
 

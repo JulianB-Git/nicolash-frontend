@@ -1,27 +1,46 @@
-import { type Metadata } from "next";
+import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
-import { Toaster } from "@/components/ui/sonner";
-import ErrorBoundary from "@/components/ErrorBoundary";
-import PerformanceMonitor from "@/components/PerformanceMonitor";
-import "./globals.css";
+import { Cinzel, Fraunces, Inter } from "next/font/google";
+import "@/styles/globals.css";
 
-export const metadata = {
-  title: "Nicole & Lashca's Wedding | April 1, 2026",
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-serif",
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+const cinzel = Cinzel({
+  subsets: ["latin"],
+  variable: "--font-display",
+  weight: ["400", "500"],
+  display: "swap",
+});
+
+export const metadata: Metadata = {
+  title: "Nicole Carew & Lashca Pieterse | 1 April 2026",
   description:
-    "Join us for our South of France inspired wedding at Nibbana Farm, Tulbagh on April 1, 2026",
+    "Join Nicole Carew and Lashca Pieterse in Tulbagh, Witzenberg Valley, Cape Town on 1 April 2026.",
   icons: {
     icon: "/favicon.svg",
   },
   openGraph: {
-    title: "Nicole & Lashca's Wedding",
-    description: "Join us for our wedding celebration on April 1, 2026",
+    title: "Nicole Carew & Lashca Pieterse",
+    description:
+      "A modern garden-party celebration in the Cape Winelands on 1 April 2026.",
     type: "website",
     images: [
       {
         url: "/images/wedding/leading.jpg",
         width: 1200,
         height: 630,
-        alt: "Nicole & Lashca's Wedding",
+        alt: "Nicole Carew and Lashca Pieterse wedding",
       },
     ],
   },
@@ -35,22 +54,10 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang='en'>
-        <head>
-          <link rel='preconnect' href='https://fonts.googleapis.com' />
-          <link
-            rel='preconnect'
-            href='https://fonts.gstatic.com'
-            crossOrigin='anonymous'
-          />
-          <link
-            href='https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&family=Great+Vibes&display=swap'
-            rel='stylesheet'
-          />
-        </head>
-        <body className='antialiased'>
-          <ErrorBoundary context='Application Root'>{children}</ErrorBoundary>
-          <Toaster />
-          <PerformanceMonitor />
+        <body
+          className={`${inter.variable} ${fraunces.variable} ${cinzel.variable} antialiased`}
+        >
+          {children}
         </body>
       </html>
     </ClerkProvider>
