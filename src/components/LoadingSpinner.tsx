@@ -24,18 +24,18 @@ export default function LoadingSpinner({
   };
 
   const variantClasses = {
-    default: "border-gray-900",
-    primary: "border-blue-600",
-    success: "border-green-600",
-    warning: "border-yellow-600",
-    error: "border-red-600",
+    default: "border-sage/30 border-t-olive",
+    primary: "border-olive/25 border-t-olive",
+    success: "border-sage/30 border-t-sage",
+    warning: "border-blush/50 border-t-olive",
+    error: "border-ink/20 border-t-ink",
   };
 
   return (
     <div className={cn("flex flex-col items-center justify-center", className)}>
       <div
         className={cn(
-          "animate-spin rounded-full border-b-2",
+          "animate-spin rounded-full border-2",
           sizeClasses[size],
           variantClasses[variant]
         )}
@@ -43,7 +43,7 @@ export default function LoadingSpinner({
         aria-label={text || "Loading"}
       />
       {text && (
-        <p className='text-muted-foreground mt-2 text-sm' aria-live='polite'>
+        <p className='mt-2 text-sm text-navy/70' aria-live='polite'>
           {text}
         </p>
       )}
@@ -107,7 +107,7 @@ export function LoadingOverlay({
     <div className={cn("relative", className)}>
       {children}
       {isLoading && (
-        <div className='absolute inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center z-10'>
+        <div className='absolute inset-0 bg-cream/80 backdrop-blur-sm flex items-center justify-center z-10'>
           <LoadingSpinner text={text} />
         </div>
       )}
@@ -140,9 +140,9 @@ export function ProgressIndicator({
           )}
         </div>
       )}
-      <div className='w-full bg-gray-200 rounded-full h-2'>
+      <div className='w-full rounded-full bg-sage/25 h-2'>
         <div
-          className='bg-blue-600 h-2 rounded-full transition-all duration-300 ease-out'
+          className='h-2 rounded-full bg-olive transition-all duration-300 ease-out'
           style={{ width: `${clampedProgress}%` }}
           role='progressbar'
           aria-valuenow={clampedProgress}

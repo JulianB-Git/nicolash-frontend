@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Leaf } from "lucide-react";
 import SectionReveal from "@/components/site/SectionReveal";
 import type { TimelineEvent } from "@/data/timeline";
 import { cn } from "@/lib/utils";
@@ -15,6 +14,8 @@ const collageLayout = [
   "col-span-2 aspect-[5/2]",
 ];
 
+const collageLayoutThree = ["col-span-2 aspect-[5/3]", "aspect-[4/3]", "aspect-[4/3]"];
+
 export default function Timeline({ events }: TimelineProps) {
   return (
     <ol className='relative mx-auto max-w-6xl space-y-16 md:space-y-20'>
@@ -25,12 +26,12 @@ export default function Timeline({ events }: TimelineProps) {
 
       {events.map((event, index) => (
         <li key={`${event.date}-${event.title}`} className='relative'>
-          <span
-            className='absolute left-4 top-8 flex h-8 w-8 -translate-x-1/2 items-center justify-center rounded-full border border-sage/40 bg-linen shadow-paper md:left-1/2'
-            aria-hidden='true'
-          >
-            <Leaf className='h-4 w-4 text-olive/80' />
-          </span>
+          {event.title.includes("Zanzibar") ? null : (
+            <span
+              className='absolute left-4 top-8 h-3 w-3 -translate-x-1/2 rounded-full bg-olive/70 shadow-paper md:left-1/2'
+              aria-hidden='true'
+            />
+          )}
 
           <SectionReveal
             className={cn(
@@ -61,27 +62,46 @@ export default function Timeline({ events }: TimelineProps) {
                 <div className='pointer-events-none absolute -right-8 -top-8 h-36 w-36 rounded-full bg-blush/60 blur-3xl' />
                 <div className='pointer-events-none absolute -bottom-10 left-10 h-28 w-28 rounded-full bg-sage/30 blur-3xl' />
 
-                <div className='grid grid-cols-2 gap-3'>
-                  {event.images.slice(0, 4).map((image, imageIndex) => (
-                    <figure
-                      key={`${image}-${imageIndex}`}
-                      className={cn(
-                        "overflow-hidden rounded-2xl border border-sage/20 bg-cream/90",
-                        collageLayout[imageIndex] ?? "aspect-[4/3]"
-                      )}
-                    >
-                      <div className='relative h-full w-full'>
-                        <Image
-                          src={image}
-                          alt={`${event.title} memory ${imageIndex + 1}`}
-                          fill
-                          sizes='(max-width: 768px) 100vw, 40vw'
-                          className='object-cover transition duration-500 hover:scale-[1.03]'
-                        />
-                      </div>
-                    </figure>
-                  ))}
-                </div>
+                {event.images.length === 1 ? (
+                  <figure className='overflow-hidden rounded-2xl border border-sage/20 bg-cream/90'>
+                    <div className='relative aspect-[4/5] w-full'>
+                      <Image
+                        src={event.images[0]}
+                        alt={`${event.title} memory`}
+                        fill
+                        sizes='(max-width: 768px) 100vw, 40vw'
+                        className='object-cover object-top'
+                      />
+                    </div>
+                  </figure>
+                ) : (
+                  <div className='grid grid-cols-2 gap-3'>
+                    {event.images.slice(0, 4).map((image, imageIndex) => (
+                      <figure
+                        key={`${image}-${imageIndex}`}
+                        className={cn(
+                          "overflow-hidden rounded-2xl border border-sage/20 bg-cream/90",
+                          (event.images.length === 3
+                            ? collageLayoutThree[imageIndex]
+                            : collageLayout[imageIndex]) ?? "aspect-[4/3]"
+                        )}
+                      >
+                        <div className='relative h-full w-full'>
+                          <Image
+                            src={image}
+                            alt={`${event.title} memory ${imageIndex + 1}`}
+                            fill
+                            sizes='(max-width: 768px) 100vw, 40vw'
+                            className={cn(
+                              "object-cover transition duration-500 hover:scale-[1.03]",
+                              imageIndex === 0 && "object-[50%_10%]"
+                            )}
+                          />
+                        </div>
+                      </figure>
+                    ))}
+                  </div>
+                )}
               </div>
             </article>
           </SectionReveal>

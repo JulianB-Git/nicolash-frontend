@@ -57,7 +57,7 @@ export default function Header() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.2 }}
-            className='border-t border-sage/20 bg-cream/95 px-5 py-4 md:hidden'
+            className='max-h-[70vh] overflow-y-auto border-t border-sage/20 bg-cream/95 px-5 py-4 md:hidden'
           >
             <ul className='space-y-2'>
               {navigationItems.map((item) => (

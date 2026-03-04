@@ -48,10 +48,11 @@
 
   html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
   }
 
   body {
-    @apply bg-linen text-ink font-sans;
+    @apply bg-linen text-ink font-sans overflow-x-hidden;
     background-image:
       radial-gradient(circle at 20% 18%, rgba(180, 151, 169, 0.12), transparent 30%),
       radial-gradient(circle at 82% 30%, rgba(140, 160, 138, 0.12), transparent 35%),
@@ -112,11 +113,11 @@
   }
 
   .section-shell {
-    @apply relative scroll-mt-28 py-20 md:py-28;
+    @apply relative scroll-mt-28 py-16 sm:py-20 md:py-28;
   }
 
   .section-heading {
-    @apply mx-auto mb-10 max-w-3xl text-center md:mb-12;
+    @apply mx-auto mb-8 max-w-3xl text-center md:mb-12;
   }
 
   .section-eyebrow {
