@@ -94,7 +94,7 @@ export default function WeddingSitePage() {
         id='our-story'
         eyebrow='Our Story'
         title='A steady kind of love'
-        description='From Swakop to Cape Town, back home, and now to one table in Tulbagh.'
+        description='From Swakop to Cape Town, back home, and now to one table at Nibbana Farm, Boontjiesrivier Rd Wolseley.'
       >
         <Timeline events={timelineEvents} />
       </Section>

@@ -26,14 +26,14 @@ const cinzel = Cinzel({
 export const metadata: Metadata = {
   title: "Nicole Carew & Lashca Pieterse | 1 April 2026",
   description:
-    "Join Nicole Carew and Lashca Pieterse in Tulbagh, Witzenberg Valley, Cape Town on 1 April 2026.",
+    "Join Nicole Carew and Lashca Pieterse at Nibbana Farm, Boontjiesrivier Rd Wolseley on 1 April 2026.",
   icons: {
     icon: "/favicon.svg",
   },
   openGraph: {
     title: "Nicole Carew & Lashca Pieterse",
     description:
-      "A modern garden-party celebration in the Cape Winelands on 1 April 2026.",
+      "A modern garden-party celebration at Nibbana Farm, Boontjiesrivier Rd Wolseley on 1 April 2026.",
     type: "website",
     images: [
       {

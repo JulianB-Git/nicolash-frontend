@@ -7,7 +7,7 @@ export default function SaveDateBanner() {
         <Sparkles className='h-3.5 w-3.5 text-mauve' aria-hidden='true' />
         <span>
           Save the date | Nicole Carew &amp; Lashca Pieterse | 1 April 2026 |
-          Tulbagh, Witzenberg Valley, Cape Town
+          Nibbana Farm, Boontjiesrivier Rd Wolseley
         </span>
       </div>
     </aside>

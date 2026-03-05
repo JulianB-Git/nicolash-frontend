@@ -73,7 +73,7 @@ export default function TravelStay() {
       <SectionReveal className='paper-card p-6 lg:col-span-4' delay={0.12}>
         <h3 className='inline-flex items-center gap-2 text-2xl'>
           <Trees className='h-5 w-5 text-mauve' aria-hidden='true' />
-          Tulbagh ideas
+          Nibbana Farm area ideas
         </h3>
         <ul className='mt-4 space-y-2 text-sm leading-relaxed text-navy/85'>
           {thingsToDo.map((item) => (
@@ -103,7 +103,7 @@ export default function TravelStay() {
               Nibbana Farm
             </p>
             <p className='mt-1 text-sm text-navy/85'>
-              Tulbagh | Witzenberg Valley | Cape Town
+              Nibbana Farm, Boontjiesrivier Rd Wolseley
             </p>
           </div>
 

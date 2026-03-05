@@ -17,7 +17,7 @@ export default function VenueMapSection() {
     },
   };
 
-  const venueAddress = "Nibbana Farm, Tulbagh/Wolseley, South Africa";
+  const venueAddress = "Nibbana Farm, Boontjiesrivier Rd Wolseley";
   const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
     venueAddress,
   )}`;
@@ -59,8 +59,8 @@ export default function VenueMapSection() {
               className='font-lato text-base sm:text-lg md:text-xl leading-relaxed'
               style={{ color: "var(--wedding-slate)" }}
             >
-              Nestled in the heart of the beautiful Tulbagh/Wolseley
-              countryside, Nibbana Farm offers a stunning backdrop for our
+              Nestled in the heart of the Wolseley countryside, Nibbana Farm,
+              Boontjiesrivier Rd Wolseley offers a stunning backdrop for our
               special day. Surrounded by rolling vineyards and majestic
               mountains, this picturesque venue embodies the charm and elegance
               of the South African winelands.

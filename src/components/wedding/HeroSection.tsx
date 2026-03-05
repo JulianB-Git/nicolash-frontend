@@ -119,10 +119,7 @@ export default function HeroSection() {
                 Venue
               </p>
               <p className='font-lato text-base sm:text-lg md:text-xl font-light'>
-                Nibbana Farm
-              </p>
-              <p className='font-lato text-sm sm:text-base md:text-lg font-light'>
-                Tulbagh/Wolseley, South Africa
+                Nibbana Farm, Boontjiesrivier Rd Wolseley
               </p>
             </div>
           </motion.div>

@@ -9,7 +9,7 @@ export default function Footer() {
           <Heart className='h-3.5 w-3.5' aria-hidden='true' />
           1 April 2026
         </p>
-        <p>Tulbagh, Witzenberg Valley, Cape Town</p>
+        <p>Nibbana Farm, Boontjiesrivier Rd Wolseley</p>
       </div>
     </footer>
   );

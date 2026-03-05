@@ -85,13 +85,13 @@ export default function Hero() {
           </h1>
 
           <p className='mt-6 text-smallcaps font-serif text-sm text-navy/80 md:text-base'>
-            Wednesday, 1 April 2026 | Tulbagh, Witzenberg Valley, Cape Town
+            Wednesday, 1 April 2026 | Nibbana Farm, Boontjiesrivier Rd Wolseley
           </p>
 
           <p className='mx-auto mt-7 max-w-2xl text-base leading-relaxed text-ink/88 md:text-lg'>
-            We are gathering for an afternoon wedding and long-table lunch in
-            the Cape Winelands. Thank you for making the trip and sharing this
-            season with us.
+            We are gathering for an afternoon wedding and long-table lunch at
+            Nibbana Farm, Boontjiesrivier Rd Wolseley. Thank you for making the
+            trip and sharing this season with us.
           </p>
 
           <div className='mt-10 flex flex-wrap items-center justify-center gap-3'>
@@ -119,8 +119,8 @@ export default function Hero() {
             <div className='flex items-start gap-3'>
               <Compass className='mt-0.5 h-4 w-4 text-mauve' aria-hidden='true' />
               <p className='text-sm text-navy/85'>
-                Set in Tulbagh valley, with mountain views and close friends at
-                one table.
+                Set at Nibbana Farm, Boontjiesrivier Rd Wolseley, with mountain
+                views and close friends at one table.
               </p>
             </div>
             <div className='flex items-start gap-3'>

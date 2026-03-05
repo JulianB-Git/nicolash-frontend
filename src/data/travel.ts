@@ -7,9 +7,9 @@ export interface StayOption {
 
 export const gettingThere: string[] = [
   "Fly into Cape Town International Airport (CPT).",
-  "Tulbagh is about 1 hour 45 minutes by car from the airport.",
+  "Nibbana Farm, Boontjiesrivier Rd Wolseley is about 1 hour 45 minutes by car from the airport.",
   "For flexibility across the weekend, we recommend hiring a car.",
-  "Uber / ride share from Cape Town to Tulbagh is about 1.5 hours and typically costs around R1,600-R1,900 depending on demand and time of day.",
+  "Uber / ride share from Cape Town to Nibbana Farm, Boontjiesrivier Rd Wolseley is about 1.5 hours and typically costs around R1,600-R1,900 depending on demand and time of day.",
   "Local Uber availability may be limited late at night, so we recommend planning return trips in advance.",
 ];
 
