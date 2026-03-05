@@ -66,7 +66,7 @@ export const stayOptions: StayOption[] = [
 
 export const thingsToDo: string[] = [
   "Wine tasting in the valley",
-  "Olive farm lunch stops",
+  "Olive farm dinner stops",
   "Scenic mountain drives and viewpoints",
   "Local bakeries and coffee in town",
   "Morning walks among vineyards",

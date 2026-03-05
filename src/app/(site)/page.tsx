@@ -55,8 +55,8 @@ export default function WeddingSitePage() {
       <Section
         id='registry'
         eyebrow='Registry / Gifts'
-        title='If you would like to gift'
-        description='Thank you for celebrating with us. We have kept this simple.'
+        title=''
+        description=''
         className='bg-cream/55'
       >
         <Registry />

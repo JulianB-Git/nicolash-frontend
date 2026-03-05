@@ -34,7 +34,7 @@ export default function AmbianceCollageBanner({
                 Ambiance
               </p>
               <h3 className='mt-1 font-serif text-xl text-ink md:text-2xl'>
-                Editorial Tablescape
+                Garden Wedding
               </h3>
             </div>
             <p className='hidden max-w-md text-right text-xs leading-relaxed text-navy/72 md:block'>
@@ -66,7 +66,7 @@ export default function AmbianceCollageBanner({
                   {index === 0 ? (
                     <figcaption className='pointer-events-none absolute inset-x-0 bottom-0 p-4 text-cream'>
                       <p className='text-smallcaps text-[0.62rem] text-cream/85 sm:text-[0.68rem]'>
-                        Garden Lunch Mood
+                        Garden Dinner Mood
                       </p>
                       <p className='mt-1 font-serif text-sm sm:text-base'>
                         Soft florals, layered texture, and candlelight details

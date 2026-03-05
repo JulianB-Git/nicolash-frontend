@@ -78,7 +78,7 @@ export default function Hero() {
             className='mt-5 font-nameplate text-4xl leading-[1.04] text-olive sm:text-5xl md:text-7xl'
           >
             Nicole Carew
-            <span className='mx-3 inline-block font-serif text-3xl text-mauve md:text-5xl'>
+            <span className='mx-3 inline-block font-nameplate text-3xl text-olive md:text-5xl'>
               &amp;
             </span>
             Lashca Pieterse
@@ -89,7 +89,7 @@ export default function Hero() {
           </p>
 
           <p className='mx-auto mt-7 max-w-2xl text-base leading-relaxed text-ink/88 md:text-lg'>
-            We are gathering for an afternoon wedding and long-table lunch at
+            We are gathering for an afternoon wedding and long-table dinner at
             Nibbana Farm, Boontjiesrivier Rd Wolseley. Thank you for making the
             trip and sharing this season with us.
           </p>
@@ -112,7 +112,7 @@ export default function Hero() {
             <div className='flex items-start gap-3'>
               <Sparkles className='mt-0.5 h-4 w-4 text-mauve' aria-hidden='true' />
               <p className='text-sm text-navy/85'>
-                A light, airy garden-party lunch with soft florals and open
+                A light, airy garden-party dinner with soft florals and open
                 skies.
               </p>
             </div>
@@ -120,7 +120,7 @@ export default function Hero() {
               <Compass className='mt-0.5 h-4 w-4 text-mauve' aria-hidden='true' />
               <p className='text-sm text-navy/85'>
                 Set at Nibbana Farm, Boontjiesrivier Rd Wolseley, with mountain
-                views and close friends at one table.
+                views and close family &amp; friends at one table.
               </p>
             </div>
             <div className='flex items-start gap-3'>
