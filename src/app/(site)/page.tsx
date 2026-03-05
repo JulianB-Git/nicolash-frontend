@@ -5,7 +5,6 @@ import FAQAccordion from "@/components/site/FAQAccordion";
 import GalleryGrid from "@/components/site/GalleryGrid";
 import Hero from "@/components/site/Hero";
 import Registry from "@/components/site/Registry";
-import RSVPForm from "@/components/site/RSVPForm";
 import ScheduleCards from "@/components/site/ScheduleCards";
 import Section from "@/components/site/Section";
 import Timeline from "@/components/site/Timeline";
@@ -48,9 +47,17 @@ export default function WeddingSitePage() {
         title='We would love to celebrate with you'
         description='Please send your details below. This form is frontend-only for now.'
       >
-        <RSVPForm />
+        <AmbianceCollageBanner
+          images={ambiance2Images}
+          showText={false}
+          firstImageClassName='object-[50%_30%]'
+          secondImageClassName='object-[50%_30%]'
+          fourthImageClassName='object-[50%_70%]'
+          overlayHref='https://nicolash.co.uk/rsvp'
+          overlayLabel='RSVP'
+          wrapInSection={false}
+        />
       </Section>
-      <AmbianceCollageBanner images={ambiance2Images} />
 
       <Section
         id='registry'
@@ -86,6 +93,7 @@ export default function WeddingSitePage() {
         title='A few moments so far'
         description='A small collection while we count down to 1 April 2026.'
         className='bg-cream/60'
+        hideHeader
       >
         <GalleryGrid images={galleryImages} />
       </Section>
@@ -103,7 +111,7 @@ export default function WeddingSitePage() {
         id='bridal-party'
         eyebrow='Bridal Party'
         title='By our side'
-        description='The friends and family who have carried us, laughed with us, and kept us steady.'
+        description=''
         className='bg-petal/70'
       >
         <BridalPartyGrid members={bridalPartyMembers} />

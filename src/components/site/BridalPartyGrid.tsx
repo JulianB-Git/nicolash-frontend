@@ -45,7 +45,7 @@ export default function BridalPartyGrid({ members }: BridalPartyGridProps) {
               <div className='mt-4 flex items-center justify-between gap-4 px-1 pb-1'>
                 <div>
                   <p className='text-[0.6rem] font-semibold uppercase tracking-[0.34em] text-olive/80'>
-                    Bridal Party
+                    {member.label ?? "Bridal Party"}
                   </p>
                   <h3 className='mt-1 text-lg font-semibold text-ink'>{member.name}</h3>
                 </div>

@@ -13,9 +13,9 @@ export const ambiance1Images: AmbianceImage[] = [
 ];
 
 export const ambiance2Images: AmbianceImage[] = [
-  { src: "/images/ambiance2/1.png", alt: "Romantic wedding ambiance detail one" },
-  { src: "/images/ambiance2/2.png", alt: "Romantic wedding ambiance detail two" },
-  { src: "/images/ambiance2/3.png", alt: "Romantic wedding ambiance detail three" },
-  { src: "/images/ambiance2/4.png", alt: "Romantic wedding ambiance detail four" },
-  { src: "/images/ambiance2/5.png", alt: "Romantic wedding ambiance detail five" },
+  { src: "/images/ambiance2/1.jpg", alt: "Romantic wedding ambiance detail one" },
+  { src: "/images/ambiance2/2.jpg", alt: "Romantic wedding ambiance detail two" },
+  { src: "/images/ambiance2/3.jpg", alt: "Romantic wedding ambiance detail three" },
+  { src: "/images/ambiance2/4.jpg", alt: "Romantic wedding ambiance detail four" },
+  { src: "/images/ambiance2/5.jpg", alt: "Romantic wedding ambiance detail five" },
 ];

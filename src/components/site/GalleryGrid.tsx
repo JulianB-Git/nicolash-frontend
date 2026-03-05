@@ -18,7 +18,7 @@ const aspectClasses = [
 export default function GalleryGrid({ images }: GalleryGridProps) {
   return (
     <div className='columns-1 gap-4 sm:columns-2 lg:columns-3'>
-      {images.map((image, index) => (
+      {images.slice(0, 3).map((image, index) => (
         <SectionReveal
           key={`${image.src}-${index}`}
           delay={(index % 6) * 0.03}
