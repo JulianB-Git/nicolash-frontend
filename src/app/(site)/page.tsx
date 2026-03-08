@@ -23,7 +23,7 @@ export default function WeddingSitePage() {
 
       <Section
         id='schedule'
-        eyebrow='Wedding Program'
+        eyebrow='On the day'
         title='Wedding Program'
         description='A simple flow for the day: ceremony, cocktail hour, and reception.'
       >
